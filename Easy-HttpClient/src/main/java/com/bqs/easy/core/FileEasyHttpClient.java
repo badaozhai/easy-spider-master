@@ -86,17 +86,40 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	}
 
 	/**
-	 * 构造请求的方法，如post，get，header等<br>
-	 * 设置请求参数，如超时时间
+	 * 通过post方法上传文件，未测试
 	 * 
-	 * @param url 请求的URL
-	 * @param method 请求的方法
-	 * @param postdata post的数据
-	 * @param headers 请求头
+	 * @param posturl 提交的URL
+	 * @param header 请求头
+	 * @param postdata 请求参数
+	 * @param charset 字符集编码
 	 * @return
+	 * @throws Exception
 	 */
-	protected HttpUriRequest getHttpUriRequestFile(String url, String method, String path, Map<String, String> headers) {
-		RequestBuilder requestBuilder = PostFile(method, path).setUri(url);
+	public String upload_Post(String posturl, Map<String, String> header, String filepath) {
+		String status = "";
+
+		File file = new File(filepath);
+
+		if (null == filepath || "".equals(filepath) || !file.exists()) {
+			return "您要上传的文件不存在";
+		}
+		try {
+			log.info("begin post upload url : [ " + posturl + " ] .");
+			HttpUriRequest request = uploadFileRequest(posturl, filepath, header);
+			status = execute_text("", header, request);
+			log.info("end post upload url : [ " + posturl + " ] .");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return status;
+	}
+
+	/**
+	 * 上传文件
+	 * 
+	 */
+	private HttpUriRequest uploadFileRequest(String url, String path, Map<String, String> headers) {
+		RequestBuilder requestBuilder = uploadFile(path).setUri(url);
 
 		requestBuilder.addHeader("Accept", "*/*");
 		requestBuilder.addHeader("Connection", "keep-alive");
@@ -115,25 +138,21 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	}
 
 	/**
-	 * 设置请求参数<br>
-	 * 如果想提交一段字符串<br>
-	 * 那么需要将header中的content-type设置成非application/x-www-form-urlencoded;<br>
-	 * 将字符串放到postdata中参数名postdata
+	 * 上传文件
 	 * 
 	 * @param method
 	 * @param postdata
 	 * @param headers
 	 * @return
 	 */
-	private RequestBuilder PostFile(String method, String path) {
+	private RequestBuilder uploadFile(String path) {
 		RequestBuilder requestBuilder = RequestBuilder.post();
 
 		// 把文件转换成流对象FileBody
 		File file = new File(path);
 		FileBody bin = new FileBody(file);
-		// 以浏览器兼容模式运行，防止文件名乱码。
 		HttpEntity reqEntity = MultipartEntityBuilder.create()//
-				.setMode(HttpMultipartMode.BROWSER_COMPATIBLE)//
+				.setMode(HttpMultipartMode.BROWSER_COMPATIBLE)// 以浏览器兼容模式运行，防止文件名乱码。
 				.addPart("multipartFile", bin).build();
 
 		requestBuilder.setEntity(reqEntity);

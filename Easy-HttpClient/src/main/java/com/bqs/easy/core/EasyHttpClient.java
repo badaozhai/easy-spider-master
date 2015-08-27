@@ -70,6 +70,7 @@ import com.google.gson.Gson;
 
 /**
  * 封装的httpclient
+ * 
  * @author xym
  * @date 2015年5月21日
  */
@@ -748,8 +749,8 @@ public class EasyHttpClient {
 	public void setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
 	}
-	
-	public CloseableHttpClient getHttpClient(){
+
+	public CloseableHttpClient getHttpClient() {
 		return httpclient;
 	}
 
