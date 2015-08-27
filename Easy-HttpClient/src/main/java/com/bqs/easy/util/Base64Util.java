@@ -6,7 +6,7 @@ import sun.misc.BASE64Encoder;
 import java.io.UnsupportedEncodingException;
 
 /**
- * base64加密
+ * base64加密，解密
  * 
  * @author xym
  * @date 2015年8月27日
