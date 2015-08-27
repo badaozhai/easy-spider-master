@@ -13,13 +13,20 @@ import java.util.Map;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 /**
  * 上传和下载文件，上传暂未完成
+ * 
  * @author xym
  * @date 2015年8月27日
  *
@@ -30,6 +37,7 @@ public class FileEasyHttpClient extends EasyHttpClient {
 
 	/**
 	 * 通过post方法下载文件，未测试
+	 * 
 	 * @param posturl 提交的URL
 	 * @param header 请求头
 	 * @param postdata 请求参数
@@ -75,6 +83,61 @@ public class FileEasyHttpClient extends EasyHttpClient {
 			log.error(e.getMessage());
 		}
 		return status;
+	}
+
+	/**
+	 * 构造请求的方法，如post，get，header等<br>
+	 * 设置请求参数，如超时时间
+	 * 
+	 * @param url 请求的URL
+	 * @param method 请求的方法
+	 * @param postdata post的数据
+	 * @param headers 请求头
+	 * @return
+	 */
+	protected HttpUriRequest getHttpUriRequestFile(String url, String method, String path, Map<String, String> headers) {
+		RequestBuilder requestBuilder = PostFile(method, path).setUri(url);
+
+		requestBuilder.addHeader("Accept", "*/*");
+		requestBuilder.addHeader("Connection", "keep-alive");
+		if (headers != null) {
+			for (Map.Entry<String, String> headerEntry : headers.entrySet()) {
+				requestBuilder.addHeader(headerEntry.getKey(), headerEntry.getValue());
+			}
+		}
+
+		int timeout = 45000;// 超时时间
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(timeout).setSocketTimeout(timeout)
+				.setConnectTimeout(timeout).setCookieSpec(CookieSpecs.BEST_MATCH);
+
+		requestBuilder.setConfig(requestConfigBuilder.build());
+		return requestBuilder.build();
+	}
+
+	/**
+	 * 设置请求参数<br>
+	 * 如果想提交一段字符串<br>
+	 * 那么需要将header中的content-type设置成非application/x-www-form-urlencoded;<br>
+	 * 将字符串放到postdata中参数名postdata
+	 * 
+	 * @param method
+	 * @param postdata
+	 * @param headers
+	 * @return
+	 */
+	private RequestBuilder PostFile(String method, String path) {
+		RequestBuilder requestBuilder = RequestBuilder.post();
+
+		// 把文件转换成流对象FileBody
+		File file = new File(path);
+		FileBody bin = new FileBody(file);
+		// 以浏览器兼容模式运行，防止文件名乱码。
+		HttpEntity reqEntity = MultipartEntityBuilder.create()//
+				.setMode(HttpMultipartMode.BROWSER_COMPATIBLE)//
+				.addPart("multipartFile", bin).build();
+
+		requestBuilder.setEntity(reqEntity);
+		return requestBuilder;
 	}
 
 	/**
