@@ -7,5 +7,5 @@
 &nbsp;&nbsp;针对一般的post请求，直接设置header，postdata即可。<br>
 &nbsp;&nbsp;针对不是表单提交的post请求<br>
 &nbsp;&nbsp;* 如果想提交一段字符串<br>
-&nbsp;&nbsp;* 那么需要将header中的content-type设置成非application/x-www-form-urlencoded;<br>
+&nbsp;&nbsp;* 那么需要将header中的content-type设置成非application/x-www-form-urlencoded;如application/json<br>
 &nbsp;&nbsp;* 将字符串放到postdata中参数名postdata<br>
