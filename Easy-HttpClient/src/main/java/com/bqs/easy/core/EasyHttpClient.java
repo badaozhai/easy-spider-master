@@ -69,10 +69,7 @@ import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 
 /**
- * 登陆测试工具类，成功<br>
- * 密码验证使用js,<br>
- * 注意页面上几个动态参数
- * 
+ * 封装的httpclient
  * @author xym
  * @date 2015年5月21日
  */
