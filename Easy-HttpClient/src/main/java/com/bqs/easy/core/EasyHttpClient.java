@@ -748,5 +748,9 @@ public class EasyHttpClient {
 	public void setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
 	}
+	
+	public CloseableHttpClient getHttpClient(){
+		return httpclient;
+	}
 
 }
