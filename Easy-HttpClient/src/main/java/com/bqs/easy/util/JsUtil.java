@@ -24,7 +24,6 @@ import com.bqs.easy.core.EasyHttpClient;
  * @date 2015年8月27日
  *
  */
-@SuppressWarnings("restriction")
 public class JsUtil {
 
 	private static Logger log = Logger.getLogger(JsUtil.class);
