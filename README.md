@@ -9,3 +9,10 @@
 &nbsp;&nbsp;* 如果想提交一段字符串<br>
 &nbsp;&nbsp;* 那么需要将header中的content-type设置成非application/x-www-form-urlencoded;如application/json<br>
 &nbsp;&nbsp;* 将字符串放到postdata中参数名postdata<br>
+3.验证码：RuoKuai.java<br> 
+&nbsp;&nbsp;在登陆的时候需要处理验证码，我使用若快打码<br>
+&nbsp;&nbsp;若快打码，需要填充用户名，密码<br>
+&nbsp;&nbsp;会将上传的内容保存到本地<br>
+3.js加密：JsUtil.java<br> 
+&nbsp;&nbsp;在登陆的时候有的网站的密码需要加密，而加密使用Java实现非常麻烦，所以直接调用网站本身的js.<br> 
+
