@@ -3,6 +3,8 @@
  */
 package com.bqs.loginutil.test;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import com.bqs.easy.core.FileEasyHttpClient;
 
 /**
@@ -14,7 +16,9 @@ public class DownFileTest {
 
 	public static void main(String[] args) {
 		FileEasyHttpClient httpclient = new FileEasyHttpClient();
-		httpclient.down_Get("http://blog.csdn.net/lianghongge/article/details/42120751", null, "logs/a.txt");
-		httpclient.down_Post("http://blog.csdn.net/lianghongge/article/details/42120751", null, null, "logs/a.txt");
+		httpclient.Get("http://shitu.baidu.com/");
+		String url="http://shitu.baidu.com/n/image?fr=html5&target=pcSearchImage&needJson=true&id=WU_FILE_0&name=X%60EWGTIAX(KHIKJ0O99G9TJ.jpg&type=image%2Fjpeg&lastModifiedDate=Wed+Aug+26+16%3A47%3A25+UTC%2B0800+2015&size=75960";
+		String hh=httpclient.upload_Post(url, null, "C:\\Users\\wetime\\Desktop\\1.jpg");
+		System.out.println(StringEscapeUtils.unescapeJson(hh));
 	}
 }
