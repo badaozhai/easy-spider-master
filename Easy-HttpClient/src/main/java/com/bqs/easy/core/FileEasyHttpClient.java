@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 /**
+ * 上传和下载文件，上传暂未完成
  * @author xym
  * @date 2015年8月27日
  *
