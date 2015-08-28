@@ -12,7 +12,7 @@ import com.bqs.easy.core.FileEasyHttpClient;
  * @date 2015年8月27日
  *
  */
-public class DownFileTest {
+public class FileTest {
 
 	public static void main(String[] args) {
 		FileEasyHttpClient httpclient = new FileEasyHttpClient();
