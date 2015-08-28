@@ -3,7 +3,7 @@
  */
 package com.bqs.loginutil.test;
 
-import com.bqs.easy.core.EasyHttpClient;
+import com.bqs.easy.httpclient.core.EasyHttpClient;
 import com.bqs.easy.util.JsUtil;
 
 /**

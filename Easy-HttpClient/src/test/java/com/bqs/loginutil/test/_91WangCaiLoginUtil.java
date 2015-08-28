@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.bqs.easy.core.EasyHttpClient;
+import com.bqs.easy.httpclient.core.EasyHttpClient;
 import com.bqs.easy.util.LoginUtilInterface;
 import com.bqs.easy.util.MD5Util;
 import com.bqs.easy.util.RuoKuai;

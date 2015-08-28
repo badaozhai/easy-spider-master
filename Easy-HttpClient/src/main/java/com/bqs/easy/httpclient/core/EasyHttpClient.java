@@ -1,4 +1,4 @@
-package com.bqs.easy.core;
+package com.bqs.easy.httpclient.core;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

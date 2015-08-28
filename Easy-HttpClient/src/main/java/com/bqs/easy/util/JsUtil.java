@@ -15,7 +15,7 @@ import javax.script.ScriptEngineManager;
 
 import org.apache.log4j.Logger;
 
-import com.bqs.easy.core.EasyHttpClient;
+import com.bqs.easy.httpclient.core.EasyHttpClient;
 
 /**
  * 进行js操作的帮助类

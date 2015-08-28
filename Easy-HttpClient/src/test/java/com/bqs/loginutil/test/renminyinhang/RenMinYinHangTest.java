@@ -6,7 +6,7 @@ package com.bqs.loginutil.test.renminyinhang;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.bqs.easy.core.EasyHttpClient;
+import com.bqs.easy.httpclient.core.EasyHttpClient;
 
 /**
  * 人民银行测试

@@ -5,7 +5,7 @@ package com.bqs.loginutil.test;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.bqs.easy.core.FileEasyHttpClient;
+import com.bqs.easy.httpclient.core.FileEasyHttpClient;
 
 /**
  * @author xym

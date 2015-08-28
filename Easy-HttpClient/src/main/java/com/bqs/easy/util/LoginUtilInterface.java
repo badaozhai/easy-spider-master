@@ -3,7 +3,7 @@
  */
 package com.bqs.easy.util;
 
-import com.bqs.easy.core.EasyHttpClient;
+import com.bqs.easy.httpclient.core.EasyHttpClient;
 
 /**
  * 登陆接口，登陆的方法实现该方法<br>

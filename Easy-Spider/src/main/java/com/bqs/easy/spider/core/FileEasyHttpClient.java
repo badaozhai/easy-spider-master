@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2015 BQshe, Inc. All Rights Reserved.
  */
-package com.bqs.easy.core;
+package com.bqs.easy.spider.core;
 
 import java.io.File;
 import java.io.FileOutputStream;
