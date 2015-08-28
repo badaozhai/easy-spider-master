@@ -95,7 +95,7 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	 * @return
 	 * @throws Exception
 	 */
-	public String upload_Post(String posturl, Map<String, String> header, String filepath) {
+	public String upload_Post(String posturl, Map<String, String> header, String postname,String filepath) {
 		String status = "";
 
 		File file = new File(filepath);
@@ -105,7 +105,7 @@ public class FileEasyHttpClient extends EasyHttpClient {
 		}
 		try {
 			log.info("begin post upload url : [ " + posturl + " ] .");
-			HttpUriRequest request = uploadFileRequest(posturl, filepath, header);
+			HttpUriRequest request = uploadFileRequest(posturl, postname, filepath, header);
 			status = execute_text("", header, request);
 			log.info("end post upload url : [ " + posturl + " ] .");
 		} catch (Exception e) {
@@ -118,8 +118,8 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	 * 上传文件
 	 * 
 	 */
-	private HttpUriRequest uploadFileRequest(String url, String path, Map<String, String> headers) {
-		RequestBuilder requestBuilder = uploadFile(path).setUri(url);
+	private HttpUriRequest uploadFileRequest(String url, String postname,String path, Map<String, String> headers) {
+		RequestBuilder requestBuilder = uploadFile(postname,path).setUri(url);
 
 		requestBuilder.addHeader("Accept", "*/*");
 		requestBuilder.addHeader("Connection", "keep-alive");
@@ -145,7 +145,7 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	 * @param headers
 	 * @return
 	 */
-	private RequestBuilder uploadFile(String path) {
+	private RequestBuilder uploadFile(String postname,String path) {
 		RequestBuilder requestBuilder = RequestBuilder.post();
 
 		// 把文件转换成流对象FileBody
@@ -153,9 +153,10 @@ public class FileEasyHttpClient extends EasyHttpClient {
 		FileBody bin = new FileBody(file);
 		HttpEntity reqEntity = MultipartEntityBuilder.create()//
 				.setMode(HttpMultipartMode.BROWSER_COMPATIBLE)// 以浏览器兼容模式运行，防止文件名乱码。
-				.addPart("multipartFile", bin).build();
+				.addPart(postname, bin).build();
 
 		requestBuilder.setEntity(reqEntity);
+//		requestBuilder.addHeader("Content-Type", "multipart/form-data");
 		return requestBuilder;
 	}
 
