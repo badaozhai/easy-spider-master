@@ -1,5 +1,5 @@
 # easy-httpclient
-这是我封装的httpclient，基于httpclient4.3.2.<br>
+这是我封装的httpclient，基于httpclient4.3.3.<br>
 默认使用jdk1.7<br>
 1.处理网页编码：<br> 
 &nbsp;&nbsp;先判断相应头，如果相应头中content-type有网页编码，那么编码使用网页编码，<br>
