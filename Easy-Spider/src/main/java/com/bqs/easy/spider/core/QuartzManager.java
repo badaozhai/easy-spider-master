@@ -15,6 +15,9 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bqs.easy.spider.entity.Task;
+import com.bqs.easy.util.MD5Util;
+
 /**
  * @Description: 定时任务管理类
  * @date 2014-6-26 下午03:15:52
@@ -30,28 +33,37 @@ public class QuartzManager {
 	/**
 	 * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名
 	 * 
-	 * @param jobName 任务名
-	 * @param cls 任务
-	 * @param time 时间设置，参考quartz说明文档
+	 * @param jobName
+	 *            任务名
+	 * @param cls
+	 *            任务
+	 * @param time
+	 *            时间设置，参考quartz说明文档
 	 */
 	@SuppressWarnings("rawtypes")
-	public static void addJob(String jobName, Class cls, String time) {
-		addJob(jobName, cls, time, false);
+	public static void addJob(Task t, Class cls, String time) {
+		addJob(t, cls, time, false);
 	}
 
 	/**
 	 * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名
 	 * 
-	 * @param jobName 任务名
-	 * @param cls 任务
-	 * @param time 时间设置，参考quartz说明文档
+	 * @param jobName
+	 *            任务名
+	 * @param cls
+	 *            任务
+	 * @param time
+	 *            时间设置，参考quartz说明文档
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void addJob(String jobName, Class cls, String time, boolean isedit) {
+	public static void addJob(Task t, Class cls, String time, boolean isedit) {
 		try {
 			Scheduler sched = gSchedulerFactory.getScheduler();
 
+			String jobName = getJobName(t);
+
 			JobDetail jobDetail = JobBuilder.newJob(cls).withIdentity(jobName, JOB_GROUP_NAME).build();
+			jobDetail.getJobDataMap().put("task", t);
 			// 触发器
 			CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, TRIGGER_GROUP_NAME)// 触发器名,触发器组
 					.withSchedule(CronScheduleBuilder.cronSchedule(time)).build();// 触发器时间设定
@@ -73,15 +85,22 @@ public class QuartzManager {
 	/**
 	 * @Description: 添加一个定时任务
 	 * 
-	 * @param jobName 任务名
-	 * @param jobGroupName 任务组名
-	 * @param triggerName 触发器名
-	 * @param triggerGroupName 触发器组名
-	 * @param jobClass 任务
-	 * @param time 时间设置，参考quartz说明文档
+	 * @param jobName
+	 *            任务名
+	 * @param jobGroupName
+	 *            任务组名
+	 * @param triggerName
+	 *            触发器名
+	 * @param triggerGroupName
+	 *            触发器组名
+	 * @param jobClass
+	 *            任务
+	 * @param time
+	 *            时间设置，参考quartz说明文档
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void addJob(String jobName, String jobGroupName, String triggerName, String triggerGroupName, Class jobClass, String time) {
+	public static void addJob(String jobName, String jobGroupName, String triggerName, String triggerGroupName,
+			Class jobClass, String time) {
 		try {
 			Scheduler sched = gSchedulerFactory.getScheduler();
 			JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName, JOB_GROUP_NAME).build();
@@ -101,10 +120,10 @@ public class QuartzManager {
 	 * @param time
 	 */
 	@SuppressWarnings("rawtypes")
-	public static void modifyJobTime(String jobName, String time) {
+	public static void modifyJobTime(Task t, String time) {
 		try {
 			Scheduler sched = gSchedulerFactory.getScheduler();
-
+			String jobName = getJobName(t);
 			TriggerKey triggerkey = new TriggerKey(jobName, TRIGGER_GROUP_NAME);
 			CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerkey);
 
@@ -117,11 +136,15 @@ public class QuartzManager {
 				JobDetail jobDetail = sched.getJobDetail(jobkey);
 				Class objJobClass = jobDetail.getJobClass();
 				removeJob(jobName);
-				addJob(jobName, objJobClass, time, true);
+				addJob(t, objJobClass, time, true);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static String getJobName(Task t) {
+		return MD5Util.md5(t.getMainURL());
 	}
 
 	/**
@@ -132,9 +155,10 @@ public class QuartzManager {
 	 * @param time
 	 */
 	@SuppressWarnings("rawtypes")
-	public static void modifyJobTime(String jobName, String triggerGroupName, String time) {
+	public static void modifyJobTime(Task t, String triggerGroupName, String time) {
 		try {
 			Scheduler sched = gSchedulerFactory.getScheduler();
+			String jobName = getJobName(t);
 			TriggerKey triggerkey = new TriggerKey(jobName, triggerGroupName);
 			CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerkey);
 			if (trigger == null) {
@@ -146,7 +170,7 @@ public class QuartzManager {
 				JobDetail jobDetail = sched.getJobDetail(jobkey);
 				Class objJobClass = jobDetail.getJobClass();
 				removeJob(jobName);
-				addJob(jobName, objJobClass, time, true);
+				addJob(t, objJobClass, time, true);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

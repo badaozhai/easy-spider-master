@@ -14,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.bqs.easy.spider.entity.Task;
+import com.bqs.easy.spider.job.SimpleJob;
 import com.bqs.easy.util.MD5Util;
 
 public class TaskManager {
@@ -53,8 +54,10 @@ public class TaskManager {
 		if (taskset.contains(t)) {
 			taskset.remove(t);
 			taskset.add(t);
+			QuartzManager.addJob(t, SimpleJob.class, t.getQuartzParam());
 		} else {
 			taskset.add(t);
+			QuartzManager.modifyJobTime(t, t.getQuartzParam());
 		}
 		objectWirte(getTaskFile(t), t, Task.class);
 		if (isEdit) {
