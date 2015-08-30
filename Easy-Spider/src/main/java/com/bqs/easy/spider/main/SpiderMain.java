@@ -1,4 +1,4 @@
-package com.bqs.easy.spider.job;
+package com.bqs.easy.spider.main;
 
 import java.io.File;
 
@@ -16,7 +16,7 @@ import com.bqs.easy.spider.core.TaskManager;
  * Hello world!
  *
  */
-public class App {
+public class SpiderMain {
 
 	public static final String USERDIR = System.getProperty("user.dir") + File.separator;
 
