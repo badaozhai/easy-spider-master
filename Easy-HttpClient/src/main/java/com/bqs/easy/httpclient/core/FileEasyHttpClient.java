@@ -38,10 +38,14 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	/**
 	 * 通过post方法下载文件，未测试
 	 * 
-	 * @param posturl 提交的URL
-	 * @param header 请求头
-	 * @param postdata 请求参数
-	 * @param charset 字符集编码
+	 * @param posturl
+	 *            提交的URL
+	 * @param header
+	 *            请求头
+	 * @param postdata
+	 *            请求参数
+	 * @param charset
+	 *            字符集编码
 	 * @return
 	 * @throws Exception
 	 */
@@ -62,10 +66,14 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	}
 
 	/**
-	 * @param posturl 提交的URL
-	 * @param header 请求头
-	 * @param postdata 请求参数
-	 * @param charset 字符集编码
+	 * @param posturl
+	 *            提交的URL
+	 * @param header
+	 *            请求头
+	 * @param postdata
+	 *            请求参数
+	 * @param charset
+	 *            字符集编码
 	 * @return
 	 * @throws Exception
 	 */
@@ -88,14 +96,18 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	/**
 	 * 通过post方法上传文件，未测试
 	 * 
-	 * @param posturl 提交的URL
-	 * @param header 请求头
-	 * @param postdata 请求参数
-	 * @param charset 字符集编码
+	 * @param posturl
+	 *            提交的URL
+	 * @param header
+	 *            请求头
+	 * @param postdata
+	 *            请求参数
+	 * @param charset
+	 *            字符集编码
 	 * @return
 	 * @throws Exception
 	 */
-	public String upload_Post(String posturl, Map<String, String> header, String postname,String filepath) {
+	public String upload_Post(String posturl, Map<String, String> header, String postname, String filepath) {
 		String status = "";
 
 		File file = new File(filepath);
@@ -118,8 +130,8 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	 * 上传文件
 	 * 
 	 */
-	private HttpUriRequest uploadFileRequest(String url, String postname,String path, Map<String, String> headers) {
-		RequestBuilder requestBuilder = uploadFile(postname,path).setUri(url);
+	private HttpUriRequest uploadFileRequest(String url, String postname, String path, Map<String, String> headers) {
+		RequestBuilder requestBuilder = uploadFile(postname, path).setUri(url);
 
 		requestBuilder.addHeader("Accept", "*/*");
 		requestBuilder.addHeader("Connection", "keep-alive");
@@ -130,8 +142,8 @@ public class FileEasyHttpClient extends EasyHttpClient {
 		}
 
 		int timeout = 45000;// 超时时间
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(timeout).setSocketTimeout(timeout)
-				.setConnectTimeout(timeout).setCookieSpec(CookieSpecs.BEST_MATCH);
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(timeout)
+				.setSocketTimeout(timeout).setConnectTimeout(timeout).setCookieSpec(CookieSpecs.BEST_MATCH);
 
 		requestBuilder.setConfig(requestConfigBuilder.build());
 		return requestBuilder.build();
@@ -145,7 +157,7 @@ public class FileEasyHttpClient extends EasyHttpClient {
 	 * @param headers
 	 * @return
 	 */
-	private RequestBuilder uploadFile(String postname,String path) {
+	private RequestBuilder uploadFile(String postname, String path) {
 		RequestBuilder requestBuilder = RequestBuilder.post();
 
 		// 把文件转换成流对象FileBody
@@ -156,7 +168,7 @@ public class FileEasyHttpClient extends EasyHttpClient {
 				.addPart(postname, bin).build();
 
 		requestBuilder.setEntity(reqEntity);
-//		requestBuilder.addHeader("Content-Type", "multipart/form-data");
+		// requestBuilder.addHeader("Content-Type", "multipart/form-data");
 		return requestBuilder;
 	}
 

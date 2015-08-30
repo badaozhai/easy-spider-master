@@ -45,7 +45,8 @@ public class InstallCert {
 	 * 根据网站下载证书<br>
 	 * 这个必须放到声明httpclient之前,否则可能报错
 	 * 
-	 * @param wangzhi 网址
+	 * @param wangzhi
+	 *            网址
 	 */
 	public InstallCert(String wangzhi) {
 

@@ -142,7 +142,8 @@ public class EasyHttpClient {
 		};
 
 		SSLContext sslContext = SSLContexts.createDefault(); // 忽略证书主机名验证
-		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext,
+				SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
 		Registry<ConnectionSocketFactory> reg = RegistryBuilder.<ConnectionSocketFactory> create()
 				.register("http", PlainConnectionSocketFactory.INSTANCE).register("https", sslsf).build();
@@ -150,10 +151,13 @@ public class EasyHttpClient {
 		connectionManager.setDefaultMaxPerRoute(100);// 同一个路由允许最大连接数
 		// connectionManager.setMaxTotal(poolSize);
 
-		Registry<CookieSpecProvider> r = RegistryBuilder.<CookieSpecProvider> create().register(CookieSpecs.BEST_MATCH, new BestMatchSpecFactory())
-				.register(CookieSpecs.BROWSER_COMPATIBILITY, new BrowserCompatSpecFactory()).register("easy", easySpecProvider).build();
+		Registry<CookieSpecProvider> r = RegistryBuilder.<CookieSpecProvider> create()
+				.register(CookieSpecs.BEST_MATCH, new BestMatchSpecFactory())
+				.register(CookieSpecs.BROWSER_COMPATIBILITY, new BrowserCompatSpecFactory())
+				.register("easy", easySpecProvider).build();
 
-		RequestConfig requestConfig = RequestConfig.custom().setCookieSpec("easy").setSocketTimeout(10000).setConnectTimeout(10000).build();
+		RequestConfig requestConfig = RequestConfig.custom().setCookieSpec("easy").setSocketTimeout(10000)
+				.setConnectTimeout(10000).build();
 		ConnectionConfig connectioncfg = ConnectionConfig.custom().setCharset(Charsets.UTF_8).build();
 		SocketConfig socketConfig = SocketConfig.custom().setSoKeepAlive(true).setTcpNoDelay(true).build();
 
@@ -198,9 +202,12 @@ public class EasyHttpClient {
 	 * 那么需要将header中的content-type设置成非application/x-www-form-urlencoded;<br>
 	 * 将字符串放到postdata中参数名postdata
 	 * 
-	 * @param posturl 提交的URL
-	 * @param header 请求头
-	 * @param postdata 请求参数
+	 * @param posturl
+	 *            提交的URL
+	 * @param header
+	 *            请求头
+	 * @param postdata
+	 *            请求参数
 	 * @return
 	 * @throws Exception
 	 */
@@ -213,10 +220,14 @@ public class EasyHttpClient {
 	 * 那么需要将header中的content-type设置成非application/x-www-form-urlencoded;<br>
 	 * 将字符串放到postdata中参数名postdata
 	 * 
-	 * @param posturl 提交的URL
-	 * @param header 请求头
-	 * @param postdata 请求参数
-	 * @param charset 字符集编码
+	 * @param posturl
+	 *            提交的URL
+	 * @param header
+	 *            请求头
+	 * @param postdata
+	 *            请求参数
+	 * @param charset
+	 *            字符集编码
 	 * @return
 	 * @throws Exception
 	 */
@@ -236,9 +247,12 @@ public class EasyHttpClient {
 	/**
 	 * 通过httpget请求网页内容
 	 * 
-	 * @param url 请求的URL
-	 * @param header 请求头
-	 * @param charset 字符集编码
+	 * @param url
+	 *            请求的URL
+	 * @param header
+	 *            请求头
+	 * @param charset
+	 *            字符集编码
 	 * @return
 	 * @throws IOException
 	 */
@@ -263,13 +277,18 @@ public class EasyHttpClient {
 	 * 构造请求的方法，如post，get，header等<br>
 	 * 设置请求参数，如超时时间
 	 * 
-	 * @param url 请求的URL
-	 * @param method 请求的方法
-	 * @param postdata post的数据
-	 * @param headers 请求头
+	 * @param url
+	 *            请求的URL
+	 * @param method
+	 *            请求的方法
+	 * @param postdata
+	 *            post的数据
+	 * @param headers
+	 *            请求头
 	 * @return
 	 */
-	protected HttpUriRequest getHttpUriRequest(String url, String method, Map<String, String> postdata, Map<String, String> headers) {
+	protected HttpUriRequest getHttpUriRequest(String url, String method, Map<String, String> postdata,
+			Map<String, String> headers) {
 		RequestBuilder requestBuilder = selectRequestMethod(method, postdata, headers).setUri(url);
 
 		requestBuilder.addHeader("Accept", "*/*");
@@ -281,8 +300,8 @@ public class EasyHttpClient {
 		}
 
 		int timeout = 45000;// 超时时间
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(timeout).setSocketTimeout(timeout)
-				.setConnectTimeout(timeout).setCookieSpec(CookieSpecs.BEST_MATCH);
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(timeout)
+				.setSocketTimeout(timeout).setConnectTimeout(timeout).setCookieSpec(CookieSpecs.BEST_MATCH);
 
 		if (null != host && !"".equals(host) && port > 10) {
 			HttpHost proxy = new HttpHost(host, port);
@@ -304,7 +323,8 @@ public class EasyHttpClient {
 	 * @param headers
 	 * @return
 	 */
-	protected RequestBuilder selectRequestMethod(String method, Map<String, String> postdata, Map<String, String> headers) {
+	protected RequestBuilder selectRequestMethod(String method, Map<String, String> postdata,
+			Map<String, String> headers) {
 		if (method == null || method.equalsIgnoreCase("get")) {
 			return RequestBuilder.get();
 		} else if (method.equalsIgnoreCase("post")) {
@@ -545,7 +565,8 @@ public class EasyHttpClient {
 			Document document = Jsoup.parse(content);
 			Elements links = document.select("meta");
 			for (Element link : links) {
-				// 2.1、html4.01 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+				// 2.1、html4.01 <meta http-equiv="Content-Type"
+				// content="text/html; charset=UTF-8" />
 				String metaContent = link.attr("content");
 				String metaCharset = link.attr("charset");
 				if (metaContent.indexOf("charset") != -1) {
@@ -579,8 +600,10 @@ public class EasyHttpClient {
 	/**
 	 * 通过httpget请求验证码
 	 * 
-	 * @param url 请求的URL
-	 * @param header 请求头
+	 * @param url
+	 *            请求的URL
+	 * @param header
+	 *            请求头
 	 * @return
 	 * @throws IOException
 	 */
@@ -599,7 +622,8 @@ public class EasyHttpClient {
 	/**
 	 * 通过httpget请求验证码
 	 * 
-	 * @param url 请求的URL
+	 * @param url
+	 *            请求的URL
 	 * @return
 	 * @throws IOException
 	 */

@@ -50,7 +50,8 @@ public class RuoKuai {
 	/**
 	 * 字符串MD5加密
 	 * 
-	 * @param s 原始字符串
+	 * @param s
+	 *            原始字符串
 	 * @return 加密后字符串
 	 */
 	public final static String MD5(String s) {
@@ -78,8 +79,10 @@ public class RuoKuai {
 	/**
 	 * 通用URL请求方法
 	 * 
-	 * @param url 请求URL，不带参数 如：http://api.ruokuai.com/register.xml
-	 * @param param 请求参数，如：username=test&password=1
+	 * @param url
+	 *            请求URL，不带参数 如：http://api.ruokuai.com/register.xml
+	 * @param param
+	 *            请求参数，如：username=test&password=1
 	 * @return 平台返回结果json样式
 	 * @throws IOException
 	 */
@@ -114,10 +117,14 @@ public class RuoKuai {
 	/**
 	 * 答题
 	 * 
-	 * @param url 请求URL，不带参数 如：http://api.ruokuai.com/register.xml
-	 * @param param 请求参数，如：username=test&password=1
-	 * @param data 图片二进制流
-	 * @return 平台返回结果json样式 {"Result":"6888","Id":"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b"}
+	 * @param url
+	 *            请求URL，不带参数 如：http://api.ruokuai.com/register.xml
+	 * @param param
+	 *            请求参数，如：username=test&password=1
+	 * @param data
+	 *            图片二进制流
+	 * @return 平台返回结果json样式
+	 *         {"Result":"6888","Id":"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b"}
 	 * @throws IOException
 	 */
 	public static String httpPostImage(String url, String param, byte[] data) throws IOException {
@@ -143,12 +150,14 @@ public class RuoKuai {
 
 		for (String paramValue : param.split("[&]")) {
 			out.write(boundarybytesString.getBytes("UTF-8"));
-			String paramString = "Content-Disposition: form-data; name=\"" + paramValue.split("[=]")[0] + "\"\r\n\r\n" + paramValue.split("[=]")[1];
+			String paramString = "Content-Disposition: form-data; name=\"" + paramValue.split("[=]")[0] + "\"\r\n\r\n"
+					+ paramValue.split("[=]")[1];
 			out.write(paramString.getBytes("UTF-8"));
 		}
 		out.write(boundarybytesString.getBytes("UTF-8"));
 
-		String paramString = "Content-Disposition: form-data; name=\"image\"; filename=\"" + "sample.gif" + "\"\r\nContent-Type: image/gif\r\n\r\n";
+		String paramString = "Content-Disposition: form-data; name=\"image\"; filename=\"" + "sample.gif"
+				+ "\"\r\nContent-Type: image/gif\r\n\r\n";
 		out.write(paramString.getBytes("UTF-8"));
 
 		out.write(data);
@@ -173,8 +182,10 @@ public class RuoKuai {
 	/**
 	 * 获取用户信息
 	 * 
-	 * @param username 用户名
-	 * @param password 密码
+	 * @param username
+	 *            用户名
+	 * @param password
+	 *            密码
 	 * @return 平台返回结果json样式
 	 * @throws IOException
 	 */
@@ -202,9 +213,12 @@ public class RuoKuai {
 	/**
 	 * 注册用户
 	 * 
-	 * @param username 用户名
-	 * @param password 密码
-	 * @param email 邮箱
+	 * @param username
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @param email
+	 *            邮箱
 	 * @return 平台返回结果json样式
 	 * @throws IOException
 	 */
@@ -222,9 +236,12 @@ public class RuoKuai {
 	/**
 	 * 充值
 	 * 
-	 * @param username 用户名
-	 * @param id 卡号
-	 * @param password 密码
+	 * @param username
+	 *            用户名
+	 * @param id
+	 *            卡号
+	 * @param password
+	 *            密码
 	 * @return 平台返回结果json样式
 	 * @throws IOException
 	 */
@@ -243,20 +260,29 @@ public class RuoKuai {
 	/**
 	 * 答题(URL)
 	 * 
-	 * @param username 用户名
-	 * @param password 用户密码。(支持32位MD5)
-	 * @param typeid 题目类型
-	 * @param timeout 任务超时时间，默认与最小值为60秒。
-	 * @param softid 软件ID，开发者可自行申请。
-	 * @param softkey 软件KEY，开发者可自行申请。
-	 * @param imageurl 远程图片URL
-	 * @return 平台返回结果json样式 {"Result":"6888","Id":"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b"}
+	 * @param username
+	 *            用户名
+	 * @param password
+	 *            用户密码。(支持32位MD5)
+	 * @param typeid
+	 *            题目类型
+	 * @param timeout
+	 *            任务超时时间，默认与最小值为60秒。
+	 * @param softid
+	 *            软件ID，开发者可自行申请。
+	 * @param softkey
+	 *            软件KEY，开发者可自行申请。
+	 * @param imageurl
+	 *            远程图片URL
+	 * @return 平台返回结果json样式
+	 *         {"Result":"6888","Id":"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b"}
 	 * @throws IOException
 	 */
-	public static String createByUrl(String username, String password, String typeid, String timeout, String softid, String softkey, String imageurl) {
+	public static String createByUrl(String username, String password, String typeid, String timeout, String softid,
+			String softkey, String imageurl) {
 
-		String param = String.format("username=%s&password=%s&typeid=%s&timeout=%s&softid=%s&softkey=%s", username, password, typeid, timeout,
-				softid, softkey);
+		String param = String.format("username=%s&password=%s&typeid=%s&timeout=%s&softid=%s&softkey=%s", username,
+				password, typeid, timeout, softid, softkey);
 		ByteArrayOutputStream baos = null;
 		String result;
 		try {
@@ -280,20 +306,29 @@ public class RuoKuai {
 	/**
 	 * 答题(字节数组)
 	 * 
-	 * @param username 用户名
-	 * @param password 用户密码。(支持32位MD5)
-	 * @param typeid 题目类型
-	 * @param timeout 任务超时时间，默认与最小值为60秒。
-	 * @param softid 软件ID，开发者可自行申请。
-	 * @param softkey 软件KEY，开发者可自行申请。
-	 * @param data 图片的字节数组
-	 * @return 平台返回结果json样式 {"Result":"6888","Id":"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b"}
+	 * @param username
+	 *            用户名
+	 * @param password
+	 *            用户密码。(支持32位MD5)
+	 * @param typeid
+	 *            题目类型
+	 * @param timeout
+	 *            任务超时时间，默认与最小值为60秒。
+	 * @param softid
+	 *            软件ID，开发者可自行申请。
+	 * @param softkey
+	 *            软件KEY，开发者可自行申请。
+	 * @param data
+	 *            图片的字节数组
+	 * @return 平台返回结果json样式
+	 *         {"Result":"6888","Id":"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b"}
 	 * @throws IOException
 	 */
-	public static String createByUrl(String username, String password, String typeid, String timeout, String softid, String softkey, byte[] data) {
+	public static String createByUrl(String username, String password, String typeid, String timeout, String softid,
+			String softkey, byte[] data) {
 
-		String param = String.format("username=%s&password=%s&typeid=%s&timeout=%s&softid=%s&softkey=%s", username, password, typeid, timeout,
-				softid, softkey);
+		String param = String.format("username=%s&password=%s&typeid=%s&timeout=%s&softid=%s&softkey=%s", username,
+				password, typeid, timeout, softid, softkey);
 		String result;
 		try {
 			result = RuoKuai.httpPostImage("http://api.ruokuai.com/create.json", param, data);
@@ -306,8 +341,10 @@ public class RuoKuai {
 	/**
 	 * 答题(字节数组)
 	 * 
-	 * @param data 图片的字节数组
-	 * @return 平台返回结果json样式 {"Result":"6888","Id":"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b"}
+	 * @param data
+	 *            图片的字节数组
+	 * @return 平台返回结果json样式
+	 *         {"Result":"6888","Id":"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b"}
 	 * @throws IOException
 	 */
 	public static String createByByte(String typeid, byte[] data) {
@@ -317,17 +354,23 @@ public class RuoKuai {
 	/**
 	 * 上报错题
 	 * 
-	 * @param username 用户名
-	 * @param password 用户密码
-	 * @param softId 软件ID
-	 * @param softkey 软件KEY
-	 * @param id 报错题目的ID
+	 * @param username
+	 *            用户名
+	 * @param password
+	 *            用户密码
+	 * @param softId
+	 *            软件ID
+	 * @param softkey
+	 *            软件KEY
+	 * @param id
+	 *            报错题目的ID
 	 * @return
 	 * @throws IOException
 	 */
 	public static String report(String username, String password, String softid, String softkey, String id) {
 
-		String param = String.format("username=%s&password=%s&softid=%s&softkey=%s&id=%s", username, password, softid, softkey, id);
+		String param = String.format("username=%s&password=%s&softid=%s&softkey=%s&id=%s", username, password, softid,
+				softkey, id);
 		String result;
 		try {
 			result = RuoKuai.httpRequestData("http://api.ruokuai.com/reporterror.json", param);
@@ -341,7 +384,8 @@ public class RuoKuai {
 	/**
 	 * 上报错题
 	 * 
-	 * @param id 报错题目的ID
+	 * @param id
+	 *            报错题目的ID
 	 * @return
 	 * @throws IOException
 	 */
@@ -352,20 +396,28 @@ public class RuoKuai {
 	/**
 	 * 上传题目图片返回结果
 	 * 
-	 * @param username 用户名
-	 * @param password 密码
-	 * @param typeid 题目类型
-	 * @param timeout 任务超时时间
-	 * @param softid 软件ID
-	 * @param softkey 软件KEY
-	 * @param filePath 题目截图或原始图二进制数据路径
+	 * @param username
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @param typeid
+	 *            题目类型
+	 * @param timeout
+	 *            任务超时时间
+	 * @param softid
+	 *            软件ID
+	 * @param softkey
+	 *            软件KEY
+	 * @param filePath
+	 *            题目截图或原始图二进制数据路径
 	 * @return
 	 * @throws IOException
 	 */
-	public static String createByPost(String username, String password, String typeid, String timeout, String softid, String softkey, String filePath) {
+	public static String createByPost(String username, String password, String typeid, String timeout, String softid,
+			String softkey, String filePath) {
 		String result = "";
-		String param = String.format("username=%s&password=%s&typeid=%s&timeout=%s&softid=%s&softkey=%s", username, password, typeid, timeout,
-				softid, softkey);
+		String param = String.format("username=%s&password=%s&typeid=%s&timeout=%s&softid=%s&softkey=%s", username,
+				password, typeid, timeout, softid, softkey);
 		try {
 			File f = new File(filePath);
 			if (null != f) {
@@ -386,10 +438,11 @@ public class RuoKuai {
 		return result;
 	}
 
-	public static String createByPost(String username, String password, String typeid, String timeout, String softid, String softkey, byte[] byteArr) {
+	public static String createByPost(String username, String password, String typeid, String timeout, String softid,
+			String softkey, byte[] byteArr) {
 		String result = "";
-		String param = String.format("username=%s&password=%s&typeid=%s&timeout=%s&softid=%s&softkey=%s", username, password, typeid, timeout,
-				softid, softkey);
+		String param = String.format("username=%s&password=%s&typeid=%s&timeout=%s&softid=%s&softkey=%s", username,
+				password, typeid, timeout, softid, softkey);
 		try {
 			result = RuoKuai.httpPostImage("http://api.ruokuai.com/create.json", param, byteArr);
 		} catch (Exception e) {
@@ -398,8 +451,8 @@ public class RuoKuai {
 
 		try {
 			String usedir = System.getProperty("user.dir");
-			String path = usedir + File.separator + "imgcode" + File.separator + "imgcode" + File.separator + typeid + File.separator
-					+ System.currentTimeMillis() + "_" + new Random().nextInt(10000) + ".jpg";
+			String path = usedir + File.separator + "imgcode" + File.separator + "imgcode" + File.separator + typeid
+					+ File.separator + System.currentTimeMillis() + "_" + new Random().nextInt(10000) + ".jpg";
 			FileUtils.writeByteArrayToFile(new File(path), byteArr);
 		} catch (IOException e) {
 			e.printStackTrace();

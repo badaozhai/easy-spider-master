@@ -30,7 +30,7 @@ public class SpiderMain {
 
 		tomcat.getConnector().setAsyncTimeout(20000L);
 		String appBase = USERDIR + "webapps" + File.separator + "ROOT";
-		tomcat.setBaseDir(USERDIR );
+		tomcat.setBaseDir(USERDIR);
 
 		StandardServer server = (StandardServer) tomcat.getServer();
 		AprLifecycleListener listener = new AprLifecycleListener();

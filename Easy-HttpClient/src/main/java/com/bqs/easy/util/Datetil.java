@@ -120,7 +120,8 @@ public class Datetil {
 
 			if (partDate.length() > 0) {
 				calendar.add(5, -1);
-				formate = calendar.get(1) + "-" + (calendar.get(2) + 1) + "-" + calendar.get(5) + " " + partDate + ":00";
+				formate = calendar.get(1) + "-" + (calendar.get(2) + 1) + "-" + calendar.get(5) + " " + partDate
+						+ ":00";
 				longDate = Long.valueOf(string2long(formate, dateFormate));
 				return longDate.longValue();
 			}

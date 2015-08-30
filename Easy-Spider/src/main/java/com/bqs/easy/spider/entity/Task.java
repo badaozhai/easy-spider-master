@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 /**
  * 任务
+ * 
  * @author xym
  * @date 2015年8月29日
  */
@@ -50,7 +51,6 @@ public class Task implements Serializable {
 	public void setWebsiteName(String websiteName) {
 		this.websiteName = websiteName;
 	}
-
 
 	public String getMainURL() {
 		return mainURL;

@@ -184,7 +184,7 @@ public class QuartzManager {
 	public static void removeJob(Task t) {
 		try {
 			Scheduler sched = gSchedulerFactory.getScheduler();
-			String jobName=getJobName(t);
+			String jobName = getJobName(t);
 			TriggerKey key = new TriggerKey(jobName, TRIGGER_GROUP_NAME);
 			JobKey jobKey = new JobKey(jobName, JOB_GROUP_NAME);
 			sched.pauseTrigger(key);// 停止触发器
@@ -206,7 +206,7 @@ public class QuartzManager {
 	 */
 	public static void removeJob(Task t, String jobGroupName, String triggerName, String triggerGroupName) {
 		try {
-			String jobName=getJobName(t);
+			String jobName = getJobName(t);
 			Scheduler sched = gSchedulerFactory.getScheduler();
 			TriggerKey key = new TriggerKey(triggerName, triggerGroupName);
 			JobKey jobKey = new JobKey(jobName, jobGroupName);

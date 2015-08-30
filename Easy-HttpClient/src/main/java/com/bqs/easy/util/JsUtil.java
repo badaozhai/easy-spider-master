@@ -79,9 +79,12 @@ public class JsUtil {
 	/**
 	 * 执行js的方法
 	 * 
-	 * @param js js代码
-	 * @param function 想要执行的js方法
-	 * @param jsform 执行js的参数
+	 * @param js
+	 *            js代码
+	 * @param function
+	 *            想要执行的js方法
+	 * @param jsform
+	 *            执行js的参数
 	 * @return
 	 * @throws Exception
 	 */
