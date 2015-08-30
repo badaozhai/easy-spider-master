@@ -18,17 +18,19 @@ import com.bqs.easy.spider.core.TaskManager;
  */
 public class App {
 
-	public static String USERDIR = System.getProperty("user.dir");
+	public static final String USERDIR = System.getProperty("user.dir") + File.separator;
 
 	public static void main(String[] args) {
 		TaskManager.getInstance();
+
+		System.setProperty("catalina.home", USERDIR);
 		Tomcat tomcat = new Tomcat();
 
 		tomcat.setPort(8080);
 
 		tomcat.getConnector().setAsyncTimeout(20000L);
-		String appBase = USERDIR + File.separator + "webapps" + File.separator + "ROOT";
-		tomcat.setBaseDir(USERDIR);
+		String appBase = USERDIR + "webapps" + File.separator + "ROOT";
+		tomcat.setBaseDir(USERDIR );
 
 		StandardServer server = (StandardServer) tomcat.getServer();
 		AprLifecycleListener listener = new AprLifecycleListener();
