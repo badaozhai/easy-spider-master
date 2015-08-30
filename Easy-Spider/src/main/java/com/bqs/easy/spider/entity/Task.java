@@ -41,7 +41,7 @@ public class Task implements Serializable {
 	private int status = 0;
 
 	/** 定时器参数,默认为 每隔一小时更新一次 */
-	private String quartzParam = "0  0  0/1  *  *  ?";
+	private String quartzParam = "0/10  0/1  *  *  *  ?";
 
 	public String getWebsiteName() {
 		return websiteName;

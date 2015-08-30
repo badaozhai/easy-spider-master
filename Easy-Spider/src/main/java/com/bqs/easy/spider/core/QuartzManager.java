@@ -135,7 +135,7 @@ public class QuartzManager {
 				JobKey jobkey = new JobKey(jobName, JOB_GROUP_NAME);
 				JobDetail jobDetail = sched.getJobDetail(jobkey);
 				Class objJobClass = jobDetail.getJobClass();
-				removeJob(jobName);
+				removeJob(t);
 				addJob(t, objJobClass, time, true);
 			}
 		} catch (Exception e) {
@@ -169,7 +169,7 @@ public class QuartzManager {
 				JobKey jobkey = new JobKey(jobName, triggerGroupName);
 				JobDetail jobDetail = sched.getJobDetail(jobkey);
 				Class objJobClass = jobDetail.getJobClass();
-				removeJob(jobName);
+				removeJob(t);
 				addJob(t, objJobClass, time, true);
 			}
 		} catch (Exception e) {
@@ -179,11 +179,12 @@ public class QuartzManager {
 
 	/**
 	 * @Description: 移除一个任务(使用默认的任务组名，触发器名，触发器组名)
-	 * @param jobName
+	 * @param t
 	 */
-	public static void removeJob(String jobName) {
+	public static void removeJob(Task t) {
 		try {
 			Scheduler sched = gSchedulerFactory.getScheduler();
+			String jobName=getJobName(t);
 			TriggerKey key = new TriggerKey(jobName, TRIGGER_GROUP_NAME);
 			JobKey jobKey = new JobKey(jobName, JOB_GROUP_NAME);
 			sched.pauseTrigger(key);// 停止触发器
@@ -203,8 +204,9 @@ public class QuartzManager {
 	 * @param triggerGroupName
 	 * 
 	 */
-	public static void removeJob(String jobName, String jobGroupName, String triggerName, String triggerGroupName) {
+	public static void removeJob(Task t, String jobGroupName, String triggerName, String triggerGroupName) {
 		try {
+			String jobName=getJobName(t);
 			Scheduler sched = gSchedulerFactory.getScheduler();
 			TriggerKey key = new TriggerKey(triggerName, triggerGroupName);
 			JobKey jobKey = new JobKey(jobName, jobGroupName);

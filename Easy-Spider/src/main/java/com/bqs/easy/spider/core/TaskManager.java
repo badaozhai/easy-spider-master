@@ -39,10 +39,15 @@ public class TaskManager {
 
 	public void delTask(Task t) {
 		if (!t.isDeleted()) {
-
+			t.setDeleted(true);
+			objectWirte(getTaskFile(t), t, Task.class);
+			QuartzManager.removeJob(t);
+			logger.info("从更新队列中删除任务,id is : "+MD5Util.md5(t.getMainURL()));
 		} else {
+			taskset.remove(t);
 			File f = getTaskFile(t);
 			FileUtils.deleteQuietly(f);
+			logger.info("彻底删除任务,id is : "+MD5Util.md5(t.getMainURL()));
 		}
 	}
 
@@ -54,10 +59,14 @@ public class TaskManager {
 		if (taskset.contains(t)) {
 			taskset.remove(t);
 			taskset.add(t);
-			QuartzManager.addJob(t, SimpleJob.class, t.getQuartzParam());
+			if (!t.isDeleted()) {
+				QuartzManager.modifyJobTime(t, t.getQuartzParam());
+			}
 		} else {
 			taskset.add(t);
-			QuartzManager.modifyJobTime(t, t.getQuartzParam());
+			if (!t.isDeleted()) {
+				QuartzManager.addJob(t, SimpleJob.class, t.getQuartzParam());
+			}
 		}
 		objectWirte(getTaskFile(t), t, Task.class);
 		if (isEdit) {
@@ -77,6 +86,9 @@ public class TaskManager {
 					Task t = objectRead(taskfile, Task.class);
 					if (!taskset.contains(t)) {
 						taskset.add(t);
+						if (!t.isDeleted()) {
+							QuartzManager.addJob(t, SimpleJob.class, t.getQuartzParam());
+						}
 					}
 				}
 			}
