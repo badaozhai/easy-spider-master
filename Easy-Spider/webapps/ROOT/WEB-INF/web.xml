@@ -1,0 +1,112 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<display-name>Welcome to Tomcat</display-name>
+	<description>
+   Welcome to Tomcat
+  </description>
+
+	<!-- 关键词采集  -->
+	<servlet>
+		<servlet-name>addword</servlet-name>
+		<servlet-class>web.com.top.web.page.AddSearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>addword</servlet-name>
+		<url-pattern>/addword</url-pattern>
+	</servlet-mapping>
+
+	<!-- 关键词采集初始化  -->
+	<servlet>
+		<servlet-name>showwordtask</servlet-name>
+		<servlet-class>web.com.top.web.page.ShowWordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>showwordtask</servlet-name>
+		<url-pattern>/showwordtask</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 获得正在使用的token -->
+	<servlet>
+		<servlet-name>token</servlet-name>
+		<servlet-class>web.com.top.web.page.TokenManagerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>token</servlet-name>
+		<url-pattern>/token</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- 用户采集初始化  -->
+	<servlet>
+		<servlet-name>showuserspider</servlet-name>
+		<servlet-class>web.com.top.web.page.ShowUserSpiderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>showuserspider</servlet-name>
+		<url-pattern>/showuserspider</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 用户采集  -->
+	<servlet>
+		<servlet-name>adduserspider</servlet-name>
+		<servlet-class>web.com.top.web.page.AddUserSpiderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adduserspider</servlet-name>
+		<url-pattern>/adduserspider</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 用户追加 -->
+	<servlet>
+		<servlet-name>addtwitteruser</servlet-name>
+		<servlet-class>web.com.top.web.page.AddTwitterUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>addtwitteruser</servlet-name>
+		<url-pattern>/addtwitteruser</url-pattern>
+	</servlet-mapping>
+	<!-- 用户追加 -->
+	<servlet>
+		<servlet-name>addweibouser</servlet-name>
+		<servlet-class>web.com.top.web.page.AddWeiboUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>addweibouser</servlet-name>
+		<url-pattern>/addweibouser</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>pin</servlet-name>
+		<servlet-class>web.com.top.web.page.WritePinServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>pin</servlet-name>
+		<url-pattern>/pin</url-pattern>
+	</servlet-mapping>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsp</location>
+	</error-page>
+
+	<filter>
+
+		<filter-name>UrlRewriteFilter</filter-name>
+		<!-- 过滤器类所在的路径： -->
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+		<!-- 日志级别(可以不配置) -->
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>WARN</param-value>
+		</init-param>
+
+	</filter>
+
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<!-- 拦截所有url -->
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>
