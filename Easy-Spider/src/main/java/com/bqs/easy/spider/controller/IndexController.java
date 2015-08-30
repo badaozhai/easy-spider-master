@@ -7,17 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bqs.easy.spider.entity.Task;
 
 @Controller
-@RequestMapping("/spider.do")
-public class SpiderController {
+public class IndexController {
 
-	@RequestMapping(params = "method=add")
+	// @RequestMapping(params = "/index.html")
+	@RequestMapping({ "/index.html" })
 	public String update(@ModelAttribute Task t) {
-		if (t != null) {
-			System.out.println(t);
-		} else {
-			System.out.println(null + "");
-		}
-		return "success";
+		return "index";
 	}
 
 }
