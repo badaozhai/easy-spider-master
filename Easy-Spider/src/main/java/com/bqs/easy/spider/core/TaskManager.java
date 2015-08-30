@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -23,7 +24,9 @@ public class TaskManager {
 
 	private static TaskManager instance;
 
-	private Set<Task> taskset = new LinkedHashSet<Task>();
+	private Set<Task> taskset = Collections.synchronizedSet(new LinkedHashSet<Task>());
+
+	private Set<Task> runingtaskset = Collections.synchronizedSet(new LinkedHashSet<Task>());
 
 	private static final String userdir = System.getProperty("user.dir") + File.separator;
 
@@ -33,21 +36,25 @@ public class TaskManager {
 		loadTask();
 	}
 
-	public void addTask(Task t) {
+	public synchronized void addTask(Task t) {
 		editTask(t, false);
 	}
 
-	public void delTask(Task t) {
-		if (!t.isDeleted()) {
-			t.setDeleted(true);
-			objectWirte(getTaskFile(t), t, Task.class);
-			QuartzManager.removeJob(t);
-			logger.info("从更新队列中删除任务,id is : "+MD5Util.md5(t.getMainURL()));
+	public synchronized void delTask(Task t) {
+		File f = getTaskFile(t);
+		if (f.exists()) {
+			if (!t.isDeleted()) {
+				t.setDeleted(true);
+				objectWirte(f, t, Task.class);
+				QuartzManager.removeJob(t);
+				logger.info("从更新队列中删除任务,id is : " + MD5Util.md5(t.getMainURL()));
+			} else {
+				taskset.remove(t);
+				FileUtils.deleteQuietly(f);
+				logger.info("彻底删除任务,id is : " + MD5Util.md5(t.getMainURL()));
+			}
 		} else {
-			taskset.remove(t);
-			File f = getTaskFile(t);
-			FileUtils.deleteQuietly(f);
-			logger.info("彻底删除任务,id is : "+MD5Util.md5(t.getMainURL()));
+			logger.warn("the task want to delete is no exits. id id : " + MD5Util.md5(t.getMainURL()));
 		}
 	}
 
@@ -55,7 +62,7 @@ public class TaskManager {
 		return new File(new File(taskdir), "task_" + MD5Util.md5(t.getMainURL()) + "__");
 	}
 
-	public void editTask(Task t, boolean isEdit) {
+	public synchronized void editTask(Task t, boolean isEdit) {
 		if (taskset.contains(t)) {
 			taskset.remove(t);
 			taskset.add(t);
@@ -167,6 +174,19 @@ public class TaskManager {
 			instance = new TaskManager();
 		}
 		return instance;
+	}
+
+	public synchronized boolean isRunning(Task t) {
+		if (runingtaskset.contains(t)) {
+			return true;
+		} else {
+			runingtaskset.add(t);
+			return false;
+		}
+	}
+
+	public synchronized void isDone(Task t) {
+		runingtaskset.remove(t);
 	}
 
 	public static void main(String[] args) {

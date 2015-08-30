@@ -7,13 +7,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		TaskManager instance=TaskManager.getInstance();
-		instance.addTask(new Task());
+		Task t=new Task();
+		instance.addTask(t);
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		instance.delTask(new Task());
-		instance.delTask(new Task());
+//		instance.delTask(t);
+//		instance.delTask(t);
+//		System.exit(0);
 	}
 }
