@@ -12,7 +12,7 @@ public class SpiderController {
 
 	@RequestMapping(params = "method=add")
 	public String update(@ModelAttribute Task t) {
-		if (t != null) {
+		if (t != null&&!"".equals(t.getMainURL())) {
 			System.out.println(t);
 		} else {
 			System.out.println(null + "");
