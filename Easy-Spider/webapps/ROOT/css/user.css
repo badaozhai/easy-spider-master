@@ -1,0 +1,49 @@
+.layoutUser{ width:1000px; margin:0 auto;}
+.borderGray{ border:#e6e6e6 solid 4px;}/*灰色边框*/
+.padding10{ padding:10px;}
+.step{ background:url(img/step.png)}
+tt{ color:red;}
+.formUl li i,.onFocus,.onCorrect,.onError,#login .loginRight .loginError li{ background-image:url(img/user.png);}
+
+
+/*登录*/
+#login .bannerImg{ float:left; width:590px; padding:30px 30px 30px 0}
+#login .loginRight{ float:right; width:368px; min-height:340px; _height:340px; border-left:#e6e6e6 solid 4px; padding-bottom:30px;}
+#login .loginRight .title{ display:block; padding-top:25px; text-align:center; font-size:16px; font-weight:bold; }
+#login .loginRight .loginError{ float:left; width:215px; padding:0 0 0 10px; margin-left:85px; display:inline; background:#fcf8e3; border:#faebcc solid 1px; color:#f60; height:30px; line-height:30px; overflow:hidden; margin-bottom:5px; font-size:14px;}
+#login .loginRight .loginError li{ float:left; line-height:30px; width:100%; text-indent:25px; display:inline; background-position:0 -132px; background-repeat:no-repeat;}
+#login .formUl{ float:left; width:100%; font-size:14px;}
+#login .formUl li{float:left; width:100%; padding-bottom:15px; position:relative; overflow:hidden;}
+#login .formUl li .name{ float:left;width:70px; padding-right:15px; text-align:right; font-size:14px; line-height:36px; }
+#login .formUl li .textInput{ float:left; height:20px; width:180px; line-height:20px; padding:8px 10px 8px 35px; border:#ccc solid 1px; font-size:14px;}
+#login .formUl li i{ position:absolute; width:18px; height:18px; left:95px; top:9px;}
+#login .formUl li i.iA{ background-position:-50px 0;}
+
+#login .formUl li .textInput::-webkit-input-placeholder{ line-height:20px; font-size:14px; color:#ACA899;}
+#login .formUl li .textInput::-moz-placeholder{ line-height:14px; font-size:14px; color:#ACA899;}
+
+#login .formUl li.liHover .textInput{ border:#0697da solid 1px;}
+#login .formUl li.liHover i{ background-position:-100px 0;}
+#login .formUl li.liHover i.iA{ background-position:-150px 0;}
+
+#login .formUl li.imgCodeLi{ }
+#login .formUl li.imgCodeLi input{ width:60px; padding-left:10px;}
+#login .formUl li.imgCodeLi a{ float:left; margin-left:10px; display:inline;}
+#login .formUl li.imgCodeLi .linkImg{float:left; margin-left:10px; display:inline;}
+#login .formUl li.imgCodeLi img{ display:block; border:#e6e6e6 solid 1px;}
+#login .formUl li.imgCodeLi a.aGreen{ margin-top:10px;}
+#login .formUl li.goLi{ text-align:right;}
+#login .formUl li.goLi a{ margin-right:52px;}
+
+#login .formUl li.bntLi input{ float:left; margin:0px 0 0 85px; display:inline; height:38px; line-height:38px; width:228px; background:#36c500; border-radius:4px; color:#fff; font-size:16px; border:none; cursor:pointer; font-weight:bold;}
+#login .formUl li.bntLi input:hover{ background:#4ac916}
+
+#login .loginBottom{float:left; margin:0px 0 0 85px; display:inline; width:228px; font-size:14px;}
+
+
+/*成功*/
+.success{ text-align:center;}
+.success h4{ font-size:24px; text-align:center; line-height:50px;}
+.success h4 i{ display:inline-block; height:50px; width:50px; background-position:0 -1040px; vertical-align:middle; margin-right:30px;}
+.success .bntLink{ width:200px;}
+

@@ -1,0 +1,74 @@
+/*全局*/
+	body{ background:#f3f3f3; font: 12px/1.5 "微软雅黑","宋体","Arial Narrow",HELVETICA; color:#5e5e5e;  min-width:1200px;}
+	body,p,div,h1,h2,h3,h4,ul,li,dl,dt,dd,img,span,table,tr,td,th,hr,form,ol,tt,iframe,header,article,footer,tt{ margin:0px; padding:0px;}
+	img{ border:none; vertical-align:middle;}
+	ul,li,ol{ list-style:none;}
+	em,i,address{font-style:normal;}
+	.clearfix{zoom:1;display:block}
+	.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+	input{font-family:"微软雅黑";}
+	/**/
+	.height5{ height:5px; clear:both; overflow:hidden;}
+	.height10{ height:10px; clear:both; overflow:hidden;}
+	.height18{ height:18px; clear:both; overflow:hidden;}
+	.fl{ float:left;}
+	.fr{ float:right;}
+	.ml{ margin-left:10px;}
+	.mr{ margin-right:10px;}
+	.disNone{ display:none;}
+	.disBlock{ display:block;}
+	/*结构*/
+	.layout{ width:1200px; margin:0 auto;}/*主体*/
+	.sidebar{ width:660px;}/*侧栏*/
+	.column{ width:286px;}/*主栏*/
+	/*文字和链接*/
+	a{color:#5e5e5e; text-decoration:none; outline:none}/*默认*/
+	a:hover{color:#34c400; text-decoration:underline; }
+	a.aBlue{color:#0085ec;}/*蓝色*/
+	a.aBlue:hover{ color:#34c400;}
+	a.aGreen{color:#34c400;}/*绿色*/
+	a.aGreen:hover{ color:#f60;}
+	a.aOran{color:#f60;}/*橙色*/
+	a.aOran:hover{ color:#f60;}
+	a.aGray{color:#a5a5a5;}/*灰色*/
+	a.aGray:hover{ color:#34c400;}
+	.fontGray{color:#a5a5a5;}/*灰色*/
+	.fontBlue{color:#0085ec;}/*蓝色*/
+	.fontGreen{color:#34c400;}/*绿色*/
+	.fontOran{color:#f60;}/*橙色*/
+	/*按钮和连接*/
+	.bntSpan{display:inline-block; padding:5px 0px; height:28px; width:110px; line-height:14px; border-radius:3px; background:#7adb56; color:#fff;font-size:12px; text-align:center;}
+	.bntSpan:hover{background:#36c500;}
+	
+	.bntLink{ display:inline-block; padding:5px 0px;  width:110px; height:28px;  line-height:28px; text-align:c; border-radius:3px; background:#36c500; color:#fff; text-align:center; font-size:16px;}
+	.bntLink:hover{background:#4ac916; color:#fff; text-decoration:none;}
+	.bntLinkBlue{ display:inline-block; padding:5px 0px;  width:110px; height:28px;  line-height:28px; text-align:c; border-radius:3px; background:#9fd8f9; color:#fff; text-align:center; font-size:16px;}
+	.bntLinkBlue:hover{background:#a8daf6; color:#fff; text-decoration:none;}
+	/*边框 背景色*/
+  .borderGray{ border:#e6e6e6 solid 1px;}/*灰色边框*/
+	.bgWhite{ background:#fff;}/*白色背景*/
+	/*hover加阴影*/
+	.boxShadow:hover{box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);}
+/*共用*/
+  /*背景图*/
+	i,.indexBaiyi .closeBar,#footer .right dl dd a,.backToTop,.counterLayer,.footerAlert a,#adLayer a.adLayerBg,.qqLayer,#adLayer .ask .askClass .bottom .fl a,label.error,div.errorMessage,.formBnt .error, #affirmInfo .formUl .formLi .error{ background:url(img/icon.png?v=0611);}
+	/*.bnt{ background:url(img/bnt.png)}*/
+  /*头部*/
+	#top{ width:100%; min-width:1200px; height:35px; line-height:35px; background:#f5f5f5; border-bottom:#eee solid 1px; font-size:14px;}
+	#top .fl i{ float:left; width:13px; height:20px; margin:7px 8px 0 10px; display:inline;}
+	#top .fl a:hover i{-webkit-transform:rotate(30deg);-moz-transform:rotate(30deg);-o-transform:rotate(30deg);transform:rotate(30deg);-webkit-transition: all 100ms linear;-moz-transition: all 100ms linear;-o-transition: all 100ms linear;-ms-transition: all 100ms linear;transition: all 100ms linear;}
+	#top ul{ padding-right:5px;}
+	#top ul li{ float:left; padding:0 0 0 15px; position:relative; z-index:100}
+	#top ul li span{ color:#ddd; padding-left:15px;}
+	
+	#header{ background:#fff; width:100%; min-width:1200px; height:86px;  border-bottom:#eee solid 1px;}
+	#logo{ float:left; margin:12px 0 0 0; padding-left:10px;}
+	#logo a{ float:left; margin-right:42px; display:inline;}
+	#logo a.appLink{ margin-top:0px; width:200px; height:74px; background:url(img/appM.gif) no-repeat;}
+
+	
+	/*表单*/
+	input{box-shadow:none; -webkit-box-shadow:none; font-size:14px; outline:none; font-family:"微软雅黑"}
+
+	label.error{ display:none; background-repeat:no-repeat; background-position:0 -1778px; line-height:42px; color:#f60; font-size:14px; padding-left:20px; margin-left:12px;}
+  div.errorMessage{ float:left;  background-repeat:no-repeat; background-position:0 -1778px; color:#f60; font-size:14px; padding-left:20px; margin-left:12px;}
