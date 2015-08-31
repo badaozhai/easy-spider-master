@@ -29,6 +29,10 @@
             <param-value>utf8</param-value>
         </init-param>
     </filter>
+    <filter>
+		<filter-name>SystemFilter</filter-name>
+		<filter-class>com.bqs.easy.spider.controller.SystemFilter</filter-class>
+	</filter>
     <filter-mapping>
         <filter-name>Encoding</filter-name>
         <url-pattern>/*</url-pattern>

@@ -13,7 +13,7 @@ public class IndexController {
 
 	// @RequestMapping(params = "/index.html")
 	@RequestMapping({ "/index.html" })
-	public String index(@ModelAttribute Task t, @RequestHeader("User-Agent") String userAgent) {
+	public String index(@ModelAttribute Task t, @RequestHeader("User-Agent") String userAgent, @RequestHeader("cookie") String cookie) {
 		if (userAgent.contains("Mobile")) {
 			return "mindex";
 		} else {

@@ -7,12 +7,12 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
-		<!-- Spring的log4j监听器 -->
+
+	<!-- Spring的log4j监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-	
+
 	<!-- 核心控制器 -->
 	<servlet>
 		<servlet-name>book</servlet-name>
@@ -23,10 +23,14 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<filter>
+		<filter-name>SystemFilter</filter-name>
+		<filter-class>com.bqs.easy.spider.controller.SystemFilter</filter-class>
+	</filter>
 	<servlet-mapping>
 		<servlet-name>book</servlet-name>
 		<url-pattern>/</url-pattern>
