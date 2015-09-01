@@ -19,19 +19,24 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/login.html" />
+			<mvc:exclude-mapping path="/image/**" />
+			<mvc:exclude-mapping path="/favicon.ico" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/ext/**" />
+			<bean class="com.bqs.easy.spider.controller.CommonInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<mvc:resources location="/image/" mapping="/image/**" />
 	<mvc:resources location="/favicon.ico" mapping="/favicon.ico" />
 	<mvc:resources location="/css/" mapping="/css/**" />
 	<mvc:resources location="/js/" mapping="/js/**" />
 	<mvc:resources location="/ext/" mapping="/ext/**" />
-    <mvc:interceptors>  
-        <mvc:interceptor>  
-            <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->
-            <mvc:mapping path="/**" />
-            <bean class="com.bqs.easy.spider.controller.CommonInterceptor"></bean>  
-        </mvc:interceptor>
-    </mvc:interceptors>
-    
+
 	<context:component-scan base-package="com.bqs.easy.spider.controller" />
 
 	<bean

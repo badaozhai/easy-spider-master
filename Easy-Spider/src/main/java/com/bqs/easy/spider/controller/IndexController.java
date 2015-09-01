@@ -1,5 +1,7 @@
 package com.bqs.easy.spider.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -20,10 +22,15 @@ public class IndexController {
 		}
 	}
 
+	@RequestMapping({ "/login.html" })
+	public String loginpage(@ModelAttribute User u,  HttpServletRequest request) {
+		return "login";
+	}
 	@RequestMapping({ "/login" })
-	public String update(@ModelAttribute User u, @RequestHeader("cookie") String cookie) {
+	public String login(@ModelAttribute User u,  HttpServletRequest request) {
 		if (u != null && !"".equals(u.getUsername())) {
 			System.out.println(u);
+			request.getSession().setAttribute("islogin", "true");
 		} else {
 			System.out.println(null + "");
 		}

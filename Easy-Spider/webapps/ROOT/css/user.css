@@ -3,7 +3,7 @@
 .padding10{ padding:10px;}
 .step{ background:url(img/step.png)}
 tt{ color:red;}
-.formUl li i,.onFocus,.onCorrect,.onError,#login .loginRight .loginError li{ background-image:url(img/user.png);}
+.formUl li i,.onFocus,.onCorrect,.onError,#login .loginRight .loginError li{ background-image:url(../image/user.png);}
 
 
 /*登录*/
