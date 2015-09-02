@@ -31,13 +31,8 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
 
-		log.info("requestUri:" + requestUri);
-		log.info("contextPath:" + contextPath);
-		log.info("url:" + url);
-
 		String username = (String) request.getSession().getAttribute("islogin");
 		if (username == null&&!url.contains("login")) {
-			log.info("Interceptor：跳转到login页面！");
 			response.sendRedirect("/login.html");
 			return false;
 		} else{
@@ -51,10 +46,6 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		log.info("==============执行顺序: 2、postHandle================");
-		if (modelAndView != null) { // 加入当前时间
-			modelAndView.addObject("var", "测试postHandle");
-		}
 	}
 
 	/**
@@ -65,7 +56,6 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		log.info("==============执行顺序: 3、afterCompletion================");
 	}
 
 }
