@@ -1,7 +1,7 @@
 package com.bqs.easy.spider.job;
 
-import com.bqs.easy.spider.core.TaskManager;
 import com.bqs.easy.spider.entity.Task;
+import com.bqs.easy.spider.manager.TaskManager;
 
 public class Main {
 

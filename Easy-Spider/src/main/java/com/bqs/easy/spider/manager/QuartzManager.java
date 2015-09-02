@@ -1,4 +1,4 @@
-package com.bqs.easy.spider.core;
+package com.bqs.easy.spider.manager;
 
 import java.util.Date;
 

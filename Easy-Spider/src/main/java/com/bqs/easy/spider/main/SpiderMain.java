@@ -10,7 +10,7 @@ import org.apache.catalina.core.StandardServer;
 import org.apache.catalina.startup.Tomcat;
 
 import com.bqs.easy.spider.common.StopSpider;
-import com.bqs.easy.spider.core.TaskManager;
+import com.bqs.easy.spider.manager.TaskManager;
 
 /**
  * Hello world!

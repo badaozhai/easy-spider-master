@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bqs.easy.spider.core.TaskManager;
 import com.bqs.easy.spider.entity.Task;
+import com.bqs.easy.spider.manager.TaskManager;
 
 @Controller
 @RequestMapping("/spider.do")

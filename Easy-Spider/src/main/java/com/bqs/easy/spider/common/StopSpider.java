@@ -4,7 +4,7 @@ import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.log4j.Logger;
 
-import com.bqs.easy.spider.core.QuartzManager;
+import com.bqs.easy.spider.manager.QuartzManager;
 
 public class StopSpider implements Runnable {
 
