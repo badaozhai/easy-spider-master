@@ -6,8 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
@@ -26,7 +28,8 @@ public class TaskManager {
 
 	private Set<Task> taskset = Collections.synchronizedSet(new LinkedHashSet<Task>());
 
-	private Set<Task> runingtaskset = Collections.synchronizedSet(new LinkedHashSet<Task>());
+	public static List<Task> FIRST_FIFO = Collections.synchronizedList(new ArrayList<Task>());
+	public static List<Task> SECOND_FIFO = Collections.synchronizedList(new ArrayList<Task>());
 
 	private static final String userdir = System.getProperty("user.dir") + File.separator;
 
@@ -172,23 +175,6 @@ public class TaskManager {
 			instance = new TaskManager();
 		}
 		return instance;
-	}
-
-	public synchronized boolean isRunning(Task t) {
-		if (runingtaskset.contains(t)) {
-			return true;
-		} else {
-			runingtaskset.add(t);
-			return false;
-		}
-	}
-
-	public synchronized int runningTask() {
-		return runingtaskset.size();
-	}
-
-	public synchronized void isDone(Task t) {
-		runingtaskset.remove(t);
 	}
 
 	public static void main(String[] args) {

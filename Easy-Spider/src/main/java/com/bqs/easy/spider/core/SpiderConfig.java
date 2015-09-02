@@ -3,9 +3,6 @@
  */
 package com.bqs.easy.spider.core;
 
-import java.io.Closeable;
-import java.io.IOException;
-
 import com.bqs.easy.spider.entity.Task;
 
 /**
@@ -13,26 +10,33 @@ import com.bqs.easy.spider.entity.Task;
  * @date 2015年9月2日
  *
  */
-public class SpiderConfig implements Runnable,Closeable{
+public class SpiderConfig implements Runnable {
 
-	private Task t=null;
-	public SpiderConfig(Task t){
-		this.t=t;
+	private Task t = null;
+
+	public SpiderConfig(Task t) {
+		TaskManager.FIRST_FIFO.add(t);
+		this.t = t;
 	}
-	
+
 	@Override
 	public void run() {
 		System.out.println(t.getMainURL());
 		try {
-			Thread.sleep(100000);
+			Thread.sleep(23000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		runNextTask();
 	}
 
-	@Override
-	public void close() throws IOException {
-		TaskManager.getInstance().isDone(t);
+	public void runNextTask()  {
+		TaskManager.FIRST_FIFO.remove(t);
+		if (TaskManager.SECOND_FIFO.size() > 0) {
+			Task nt = TaskManager.SECOND_FIFO.remove(0);
+			SpiderConfig spiderConfig = new SpiderConfig(nt);
+			new Thread(spiderConfig).start();
+		}
 	}
 
 }

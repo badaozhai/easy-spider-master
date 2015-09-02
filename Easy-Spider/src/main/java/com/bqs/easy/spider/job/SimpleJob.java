@@ -13,17 +13,20 @@ public class SimpleJob implements Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		Task t = (Task) arg0.getJobDetail().getJobDataMap().get("task");
-		TaskManager instance = TaskManager.getInstance();
-		System.out.println(t.getMainURL());
-		if (!instance.isRunning(t)) {
-			if(instance.runningTask()<10){
+		if (!TaskManager.FIRST_FIFO.contains(t)) {
+			if (TaskManager.FIRST_FIFO.size() < 10) {
 				SpiderConfig spiderConfig = new SpiderConfig(t);
 				new Thread(spiderConfig).start();
-			}else{
-				System.out.println("max size");
+			} else {
+				if (TaskManager.SECOND_FIFO.contains(t)) {
+					System.out.println("任务已经在第二队列中"+t.getMainURL());
+				} else {
+					System.out.println("将任务放到第二队列"+t.getMainURL());
+					TaskManager.SECOND_FIFO.add(t);
+				}
 			}
 		} else {
-			System.out.println("task is running.");
+			System.out.println("task is running."+t.getMainURL());
 		}
 	}
 
