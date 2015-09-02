@@ -4,6 +4,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.bqs.easy.spider.core.SpiderConfig;
 import com.bqs.easy.spider.core.TaskManager;
 import com.bqs.easy.spider.entity.Task;
 
@@ -13,16 +14,14 @@ public class SimpleJob implements Job {
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		Task t = (Task) arg0.getJobDetail().getJobDataMap().get("task");
 		TaskManager instance = TaskManager.getInstance();
-		System.out.println("aaaaaaaaa");
+		System.out.println(t.getMainURL());
 		if (!instance.isRunning(t)) {
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(instance.runningTask()<10){
+				SpiderConfig spiderConfig = new SpiderConfig(t);
+				new Thread(spiderConfig).start();
+			}else{
+				System.out.println("max size");
 			}
-			System.out.println(arg0.getNextFireTime() + "" + t);
-			instance.isDone(t);
 		} else {
 			System.out.println("task is running.");
 		}

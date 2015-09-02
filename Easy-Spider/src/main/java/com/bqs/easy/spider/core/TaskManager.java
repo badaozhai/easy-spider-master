@@ -108,8 +108,7 @@ public class TaskManager {
 	/**
 	 * task 读取
 	 * 
-	 * @param taskFile
-	 *            任务
+	 * @param taskFile 任务
 	 */
 	@SuppressWarnings("unchecked")
 	private <T> T objectRead(File taskFile, Class<T> c) {
@@ -143,8 +142,7 @@ public class TaskManager {
 	/**
 	 * task 读取
 	 * 
-	 * @param taskFile
-	 *            任务
+	 * @param taskFile 任务
 	 */
 	private <T> boolean objectWirte(File taskFile, T t, Class<T> c) {
 		ObjectOutputStream oos = null;
@@ -183,6 +181,10 @@ public class TaskManager {
 			runingtaskset.add(t);
 			return false;
 		}
+	}
+
+	public synchronized int runningTask() {
+		return runingtaskset.size();
 	}
 
 	public synchronized void isDone(Task t) {
