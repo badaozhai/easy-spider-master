@@ -11,9 +11,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.bqs.easy.httpclient.core.EasyHttpClient;
 import com.bqs.easy.httpclient.entity.Request;
 import com.bqs.easy.spider.HttpClient.MyHttpClient;
+import com.bqs.easy.util.MyStringUtil;
 
 public class ParserAnchor {
 	private static Logger log = Logger.getLogger(MyHttpClient.class);
@@ -30,7 +30,7 @@ public class ParserAnchor {
 				continue;
 			}
 			if (!href.startsWith("http")) {
-				href = EasyHttpClient.tidyUrl(href, referer);
+				href = MyStringUtil.tidyUrl(href, referer);
 			}
 			if (href.contains("#")) {
 				href=href.substring(0, href.indexOf("#"));

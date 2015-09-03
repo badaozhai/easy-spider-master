@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document;
 import com.bqs.easy.httpclient.core.EasyHttpClient;
 import com.bqs.easy.util.LoginUtilInterface;
 import com.bqs.easy.util.MD5Util;
+import com.bqs.easy.util.MyStringUtil;
 import com.bqs.easy.util.RuoKuai;
 
 /**
@@ -39,14 +40,14 @@ public class _91WangCaiLoginUtil implements LoginUtilInterface {
 		// String codestr="{\"Result\":\"6888\",\"Id\":\"ca3c76d9-88e3-4b4d-9849-ae6c13ad133b\"}";
 		String codestr = RuoKuai.createByByte("1040", data);//
 
-		Map<String, Object> map = EasyHttpClient.json2Map(codestr);
+		Map<String, Object> map = MyStringUtil.json2Map(codestr);
 		if (map != null) {
 			String code = map.get("Result") + "";
 
 			postdata.put("code", code);
 
 			String s = util.Post("http://www.91wangcai.com/user/login", null, postdata);
-			Map<String, Object> loginmap = EasyHttpClient.json2Map(s);
+			Map<String, Object> loginmap = MyStringUtil.json2Map(s);
 			if (loginmap != null) {
 				status = loginmap.get("status") + "";
 				if ("1.0".equals(status)) {// {"message":"验证码错误或已超时，请点击刷新","status":1,"data":""}
@@ -106,7 +107,7 @@ public class _91WangCaiLoginUtil implements LoginUtilInterface {
 		String loginhtml = util.Get("http://www.91wangcai.com/user/to_login");
 		Document doc = Jsoup.parse(loginhtml);
 		String imgsrc = doc.select("img#valicodeImg").attr("src");
-		imgsrc = EasyHttpClient.tidyUrl("http://www.91wangcai.com/user/to_login", imgsrc);
+		imgsrc = MyStringUtil.tidyUrl("http://www.91wangcai.com/user/to_login", imgsrc);
 		Map<String, String> postdata = new LinkedHashMap<String, String>();
 		postdata.put("username", name);// {username:username,password:$.md5(password),code:code,csrf:csrfToken},
 		postdata.put("password", a);

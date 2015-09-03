@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -66,7 +65,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.google.common.base.Charsets;
-import com.google.gson.Gson;
 
 /**
  * 封装的httpclient
@@ -631,27 +629,7 @@ public class EasyHttpClient {
 		return GetImg(url, null);
 	}
 
-	/**
-	 * 处理URL
-	 * 
-	 * @param refer
-	 * @param url
-	 * @return
-	 */
-	public static String tidyUrl(String refer, String url) {
-		String nurl = "";
-		try {
-			if (!url.startsWith("http")) {
-				URL u = new URL(refer);
-				nurl = new URL(u, url).toString();
-			} else {
-				return url;
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		return nurl;
-	}
+
 
 	/**
 	 * 通过get请求页面内容
@@ -703,19 +681,6 @@ public class EasyHttpClient {
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public static Map<String, Object> json2Map(String json) {
-		Gson gson = new Gson();
-		Map<String, Object> map = null;
-		try {
-			map = gson.fromJson(json, Map.class);
-		} catch (Exception e) {
-			log.info("json----------------------->" + json);
-			log.error("LoginUtil.json2Map()-------------->" + e.getMessage());
-		}
-		return map;
 	}
 
 	/**
