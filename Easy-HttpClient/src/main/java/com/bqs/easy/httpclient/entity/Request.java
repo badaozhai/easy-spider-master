@@ -50,11 +50,13 @@ public class Request implements Serializable {
 	}
 
 	public String getMethod() {
-		return method;
+		return method.toUpperCase();
 	}
 
 	public void setMethod(String method) {
-		this.method = method;
+		if (method != null && !"".equals(method)) {
+			this.method = method;
+		}
 	}
 
 	public String getReferer() {
@@ -176,8 +178,6 @@ public class Request implements Serializable {
 		this.url = url;
 	}
 
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

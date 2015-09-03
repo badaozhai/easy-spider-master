@@ -30,7 +30,7 @@ public class MyHttpClient extends EasyHttpClient {
 		return bytes;
 	}
 
-	public HttpUriRequest requestHelp(Request request) {
+	private HttpUriRequest requestHelp(Request request) {
 		HttpUriRequest requesturi = getHttpUriRequest(request.getUrl(), request.getMethod(), request.getPostdata(),
 				request.getHeader());
 		return requesturi;

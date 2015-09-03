@@ -3,6 +3,9 @@
  */
 package com.bqs.easy.spider.core;
 
+import org.apache.log4j.Logger;
+
+import com.bqs.easy.httpclient.entity.Request;
 import com.bqs.easy.spider.entity.Task;
 import com.bqs.easy.spider.manager.TaskManager;
 
@@ -12,6 +15,9 @@ import com.bqs.easy.spider.manager.TaskManager;
  *
  */
 public class Spider extends Thread {
+
+	private static Logger log = Logger.getLogger(Spider.class);
+
 	private SpiderConfig config = null;
 
 	public Spider(SpiderConfig config) {
@@ -20,12 +26,18 @@ public class Spider extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println(Thread.currentThread().getName()+config.getTask().getMainURL());
-		try {
-			Thread.sleep(23000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		config.firetPage();
+		while (!config.getQueues().isEmpty()) {
+			Request r = config.getQueues().poll();
+			log.info("queue size : "+config.getQueues().size()+" ,url [ " + r.getUrl() + " ] start .");
+			String html = config.getHttpclient().requestText(r);
+			System.out.println(html.length());
+			log.info("url [ " + r.getUrl() + " ] end .");
+			log.info("=========================================");
 		}
+
+		log.info("task [ " + config.getTask() + " ] end .");
+
 		runNextTask();
 	}
 

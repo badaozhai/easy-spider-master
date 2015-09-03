@@ -2,6 +2,7 @@
 
 import java.io.Serializable;
 
+import com.bqs.easy.httpclient.entity.Request;
 import com.google.gson.Gson;
 
 /**
@@ -43,6 +44,8 @@ public class Task implements Serializable {
 
 	/** 定时器参数,默认为 每隔一小时更新一次 */
 	private String quartzParam = "0/10  0/1  *  *  *  ?";
+
+	private Request request = null;
 
 	public String getWebsiteName() {
 		return websiteName;
@@ -122,6 +125,13 @@ public class Task implements Serializable {
 
 	public void setQuartzParam(String quartzParam) {
 		this.quartzParam = quartzParam;
+	}
+
+	public Request getRequest() {
+		if (request == null) {
+			request = new Request(mainURL);
+		}
+		return request;
 	}
 
 	@Override

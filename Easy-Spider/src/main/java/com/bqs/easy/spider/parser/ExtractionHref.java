@@ -13,19 +13,34 @@ import org.jsoup.select.Elements;
 
 import com.bqs.easy.httpclient.entity.Request;
 import com.bqs.easy.spider.HttpClient.MyHttpClient;
+import com.bqs.easy.spider.imp.IExtractionHrefAble;
 import com.bqs.easy.util.MyStringUtil;
 
-public class ParserAnchor {
+
+/**
+ * 通用连接提取方法，可以自定义
+ * @author xym
+ * @date 2015年9月3日
+ */
+public class ExtractionHref implements IExtractionHrefAble {
 	private static Logger log = Logger.getLogger(MyHttpClient.class);
 
+	/**
+	 * 连接提取
+	 * @param referer 来源url
+	 * @param html 网页内容
+	 * @param taskmap
+	 * @param charset 网页字符集
+	 * @return
+	 */
 	public List<Request> parserLinksInHTML(String referer, String html, Map<String, Map<String, String>> taskmap,
 			String charset) {
 		List<Request> list = new ArrayList<Request>();
 		Document doc = Jsoup.parse(html);
 		Elements links = doc.select("a");
 		for (Element element : links) {
-			String href = element.attr("href");
-			String title = element.text();
+			String href = element.attr("href").trim();
+			String title = element.text().trim();
 			if ("#".equals(href) || "".equals(href) || href.contains("javascript")) {
 				continue;
 			}
@@ -33,9 +48,9 @@ public class ParserAnchor {
 				href = MyStringUtil.tidyUrl(href, referer);
 			}
 			if (href.contains("#")) {
-				href=href.substring(0, href.indexOf("#"));
+				href = href.substring(0, href.indexOf("#"));
 			}
-			
+
 			System.out.println(href + "\t<------>" + title);
 			Request r = new Request(href);
 			r.setTitle(title);
@@ -44,20 +59,20 @@ public class ParserAnchor {
 				if (!"".equals(title)) {
 					list.remove(r);
 					list.add(r);
-				}else{
+				} else {
 				}
-			}else{
+			} else {
 				list.add(r);
 			}
 		}
-		
+
 		System.out.println();
 		System.out.println();
 		System.out.println();
 		System.out.println();
 		System.out.println();
 		for (Request element : list) {
-			System.out.println(element.getUrl()+"\t"+element.getTitle());
+			System.out.println(element.getUrl() + "\t" + element.getTitle());
 		}
 		log.info("url size=" + list.size());
 		return list;
@@ -65,7 +80,7 @@ public class ParserAnchor {
 
 	public static void main(String[] args) {
 		MyHttpClient h = new MyHttpClient();
-		ParserAnchor p = new ParserAnchor();
+		ExtractionHref p = new ExtractionHref();
 		String referer = "http://news.baidu.com/ns?cl=3&ct=9&rn=20&sp=hotquery&tn=news&word=%CF%B0%BD%FC%C6%BD%20%BD%B2%BB%B0%20%B2%C3%BE%FC30%CD%F2";
 		String html = h.Get(referer);
 		p.parserLinksInHTML(referer, html, null, h.getCharset());
