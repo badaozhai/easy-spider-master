@@ -20,7 +20,7 @@ public class Spider extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println(config.getTask().getMainURL());
+		System.out.println(Thread.currentThread().getName()+config.getTask().getMainURL());
 		try {
 			Thread.sleep(23000);
 		} catch (InterruptedException e) {
