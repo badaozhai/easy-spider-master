@@ -613,6 +613,7 @@ public class EasyHttpClient {
 			log.info("end get url :" + url + " .");
 			return data;
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			return new byte[0];
 		}
 	}
