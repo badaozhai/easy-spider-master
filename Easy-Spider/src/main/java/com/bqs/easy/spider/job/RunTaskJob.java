@@ -1,5 +1,6 @@
 package com.bqs.easy.spider.job;
 
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -11,6 +12,8 @@ import com.bqs.easy.spider.manager.TaskManager;
 
 public class RunTaskJob implements Job {
 
+	private static Logger log = Logger.getLogger(RunTaskJob.class);
+
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		Task t = (Task) arg0.getJobDetail().getJobDataMap().get("task");
@@ -20,14 +23,14 @@ public class RunTaskJob implements Job {
 				new Spider(spiderConfig).start();
 			} else {
 				if (TaskManager.SECOND_FIFO.contains(t)) {
-					System.out.println("任务已经在第二队列中" + t.getMainURL());
+					log.info("任务已经在第二队列中" + t.getMainURL());
 				} else {
-					System.out.println("将任务放到第二队列" + t.getMainURL());
+					log.info("将任务放到第二队列" + t.getMainURL());
 					TaskManager.SECOND_FIFO.add(t);
 				}
 			}
 		} else {
-			System.out.println("task is running." + t.getMainURL());
+			log.info("task is running." + t.getMainURL());
 		}
 	}
 

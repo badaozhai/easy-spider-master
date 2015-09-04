@@ -72,7 +72,7 @@ public class SpiderConfig {
 		List<Request> list = extractionhrefs.parserLinksInHTML(t.getMainURL(), html, null, httpclient.getCharset());
 		for (Request request : list) {
 			if (!queues.contains(request)) {
-				log.info("put , Method : [ "+request.getMethod()+" ] , Url - "+request.getUrl());
+				log.info("put , Method : [ "+request.getMethod()+" ] , Url - "+request.getUrl()+" | "+request.getTitle());
 				queues.add(request);
 			}
 		}

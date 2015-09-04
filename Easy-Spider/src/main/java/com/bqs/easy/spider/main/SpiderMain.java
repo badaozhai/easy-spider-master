@@ -13,7 +13,9 @@ import com.bqs.easy.spider.common.StopSpider;
 import com.bqs.easy.spider.manager.TaskManager;
 
 /**
- * Hello world!
+ * 
+ * @author xym
+ * @date 2015年9月4日
  *
  */
 public class SpiderMain {

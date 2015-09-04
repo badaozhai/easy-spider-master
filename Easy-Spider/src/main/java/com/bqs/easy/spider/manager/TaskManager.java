@@ -90,6 +90,11 @@ public class TaskManager {
 	 * @param isEdit 任务状态是否属实编辑状态
 	 */
 	public synchronized void editTask(Task t, boolean isEdit) {
+		String url=t.getMainURL();
+		if(!url.matches("http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?")){
+			logger.error("URL不合法");
+			return;
+		}
 		if (taskset.contains(t)) {//如果原先已经存在该任务，那么删除该任务，重新添加
 			taskset.remove(t);
 			taskset.add(t);
