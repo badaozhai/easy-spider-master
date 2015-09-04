@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.Logger;
 
 import com.bqs.easy.httpclient.entity.Request;
-import com.bqs.easy.spider.HttpClient.MyHttpClient;
+import com.bqs.easy.spider.downloader.MyHttpClient;
 import com.bqs.easy.spider.entity.Task;
 import com.bqs.easy.spider.imp.IExtractionHrefAble;
 import com.bqs.easy.spider.manager.TaskManager;

@@ -1,12 +1,13 @@
 package com.bqs.easy.spider.job;
 
+import com.bqs.easy.spider.downloader.MyHttpClient;
+
 public class Main {
 
 	public static void main(String[] args) {
-		String s="https://weibo.com/souyidai";
-		System.out.println(s.matches("http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?"));
-//		instance.delTask(t);
-//		instance.delTask(t);
-//		System.exit(0);
+		MyHttpClient h=new MyHttpClient();
+		h.Get("https://www.baidu.com/");
+		System.out.println(h.getContent_type());
+		System.out.println(h.getContent_type());
 	}
 }

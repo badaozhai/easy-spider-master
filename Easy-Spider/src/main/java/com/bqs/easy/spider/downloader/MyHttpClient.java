@@ -1,12 +1,13 @@
-package com.bqs.easy.spider.HttpClient;
+package com.bqs.easy.spider.downloader;
 
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.log4j.Logger;
 
 import com.bqs.easy.httpclient.core.EasyHttpClient;
 import com.bqs.easy.httpclient.entity.Request;
+import com.bqs.easy.spider.imp.IDownloader;
 
-public class MyHttpClient extends EasyHttpClient {
+public class MyHttpClient extends EasyHttpClient implements IDownloader {
 
 	private static Logger log = Logger.getLogger(MyHttpClient.class);
 
@@ -31,8 +32,7 @@ public class MyHttpClient extends EasyHttpClient {
 	}
 
 	private HttpUriRequest requestHelp(Request request) {
-		HttpUriRequest requesturi = getHttpUriRequest(request.getUrl(), request.getMethod(), request.getPostdata(),
-				request.getHeader());
+		HttpUriRequest requesturi = getHttpUriRequest(request.getUrl(), request.getMethod(), request.getPostdata(), request.getHeader());
 		return requesturi;
 	}
 }
