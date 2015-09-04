@@ -11,9 +11,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
 
+import com.bqs.easy.httpclient.entity.Page;
 import com.bqs.easy.httpclient.entity.Request;
-import com.bqs.easy.spider.downloader.MyHttpClient;
+import com.bqs.easy.spider.downloader.HttpClientDownloader;
 import com.bqs.easy.spider.entity.Task;
+import com.bqs.easy.spider.imp.IDownloader;
 import com.bqs.easy.spider.imp.IExtractionHrefAble;
 import com.bqs.easy.spider.manager.TaskManager;
 import com.bqs.easy.spider.parser.ExtractionHref;
@@ -35,7 +37,7 @@ public class SpiderConfig {
 	/**
 	 * 访问网页的方法
 	 */
-	private MyHttpClient httpclient = null;
+	private IDownloader downloader = null;
 
 	/**
 	 * 连接提取模块
@@ -59,7 +61,7 @@ public class SpiderConfig {
 		log.info("task [ " + t + " ] end .");
 		TaskManager.FIRST_FIFO.add(t);
 		this.t = t;
-		httpclient = new MyHttpClient();
+		downloader = new HttpClientDownloader();
 		extractionhrefs = new ExtractionHref();
 
 	}
@@ -68,11 +70,25 @@ public class SpiderConfig {
 	 * 采集任务的第一页，入口页
 	 */
 	public void firstPage() {
-		String html = httpclient.requestText(t.getRequest());
-		List<Request> list = extractionhrefs.parserLinksInHTML(t.getMainURL(), html, null, httpclient.getCharset());
-		for (Request request : list) {
-			if (!queues.contains(request)) {
-				log.info("put , Method : [ "+request.getMethod()+" ] , Url - "+request.getUrl()+" | "+request.getTitle());
+		Page p = downloader.requestText(t.getRequest());
+		List<Request> list = extractionhrefs.parserLinksInHTML(t.getMainURL(), p.getHtml(), null, p.getCharset());
+		addRequests(list, 0);
+	}
+
+	/**
+	 * 将url放到队列当中
+	 * 
+	 * @param requests
+	 * @param depth
+	 */
+	public void addRequests(List<Request> requests, int depth) {
+		int cdepth = depth + 1;
+		for (Request request : requests) {
+			String url = request.getUrl();
+			if (!visitedURL.contains(url) && !queues.contains(request)) {
+				request.setDepth(cdepth);
+				log.info("put , Method : [ " + request.getMethod() + " ] Depth : " + cdepth + " , Url - " + request.getUrl()
+						+ " | " + request.getTitle());
 				queues.add(request);
 			}
 		}
@@ -101,11 +117,24 @@ public class SpiderConfig {
 		return this;
 	}
 
-	public MyHttpClient getHttpclient() {
-		return httpclient;
+	public SpiderConfig setDownloader(IDownloader downloader) {
+		if (downloader != null) {
+			this.downloader = downloader;
+		} else {
+			this.downloader = new HttpClientDownloader();
+		}
+		return this;
+	}
+
+	public IDownloader getDownloader() {
+		return downloader;
 	}
 
 	public BlockingQueue<Request> getQueues() {
 		return queues;
+	}
+
+	public Set<String> getVisitedURL() {
+		return visitedURL;
 	}
 }

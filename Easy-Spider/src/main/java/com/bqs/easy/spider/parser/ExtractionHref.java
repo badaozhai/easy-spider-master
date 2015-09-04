@@ -12,7 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.bqs.easy.httpclient.entity.Request;
-import com.bqs.easy.spider.downloader.MyHttpClient;
+import com.bqs.easy.spider.downloader.HttpClientDownloader;
 import com.bqs.easy.spider.imp.IExtractionHrefAble;
 import com.bqs.easy.util.MyStringUtil;
 
@@ -23,7 +23,7 @@ import com.bqs.easy.util.MyStringUtil;
  * @date 2015年9月3日
  */
 public class ExtractionHref implements IExtractionHrefAble {
-	private static Logger log = Logger.getLogger(MyHttpClient.class);
+	private static Logger log = Logger.getLogger(HttpClientDownloader.class);
 
 	/**
 	 * 连接提取
@@ -51,7 +51,6 @@ public class ExtractionHref implements IExtractionHrefAble {
 				href = href.substring(0, href.indexOf("#"));
 			}
 
-			System.out.println(href + "\t<------>" + title);
 			Request r = new Request(href);
 			r.setTitle(title);
 			r.setReferer(referer);
@@ -66,20 +65,12 @@ public class ExtractionHref implements IExtractionHrefAble {
 			}
 		}
 
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		for (Request element : list) {
-			System.out.println(element.getUrl() + "\t" + element.getTitle());
-		}
 		log.info("url size=" + list.size());
 		return list;
 	}
 
 	public static void main(String[] args) {
-		MyHttpClient h = new MyHttpClient();
+		HttpClientDownloader h = new HttpClientDownloader();
 		ExtractionHref p = new ExtractionHref();
 		String referer = "http://news.baidu.com/ns?cl=3&ct=9&rn=20&sp=hotquery&tn=news&word=%CF%B0%BD%FC%C6%BD%20%BD%B2%BB%B0%20%B2%C3%BE%FC30%CD%F2";
 		String html = h.Get(referer);
