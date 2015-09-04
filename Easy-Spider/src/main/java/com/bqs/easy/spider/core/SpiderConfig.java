@@ -28,9 +28,18 @@ import com.bqs.easy.spider.parser.ExtractionHref;
 public class SpiderConfig {
 	private static Logger log = Logger.getLogger(SpiderConfig.class);
 
+	/**
+	 * 将要采集的任务
+	 */
 	private Task t = null;
+	/**
+	 * 访问网页的方法
+	 */
 	private MyHttpClient httpclient = null;
 
+	/**
+	 * 连接提取模块
+	 */
 	private IExtractionHrefAble extractionhrefs = null;
 
 	/**
@@ -42,7 +51,7 @@ public class SpiderConfig {
 	 */
 	private Set<String> visitingURL = new LinkedHashSet<String>();
 	/**
-	 * 待处理队列
+	 * 任务队列
 	 */
 	BlockingQueue<Request> queues = new LinkedBlockingQueue<Request>();
 
@@ -55,7 +64,10 @@ public class SpiderConfig {
 
 	}
 
-	public void firetPage() {
+	/**
+	 * 采集任务的第一页，入口页
+	 */
+	public void firstPage() {
 		String html = httpclient.requestText(t.getRequest());
 		List<Request> list = extractionhrefs.parserLinksInHTML(t.getMainURL(), html, null, httpclient.getCharset());
 		for (Request request : list) {

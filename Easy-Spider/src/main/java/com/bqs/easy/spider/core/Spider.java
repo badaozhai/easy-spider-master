@@ -26,13 +26,14 @@ public class Spider extends Thread {
 
 	@Override
 	public void run() {
-		config.firetPage();
-		while (!config.getQueues().isEmpty()) {
-			Request r = config.getQueues().poll();
-			log.info("queue size : "+config.getQueues().size()+" ,url [ " + r.getUrl() + " ] start .");
+		config.firstPage();
+		Request r = config.getQueues().poll();
+		while (r != null) {
+			log.info("queue size : " + config.getQueues().size() + " ,url [ " + r.getUrl() + " ] start .");
 			String html = config.getHttpclient().requestText(r);
 			System.out.println(html.length());
 			log.info("url [ " + r.getUrl() + " ] end .");
+			r = config.getQueues().poll();
 			log.info("=========================================");
 		}
 
@@ -41,6 +42,9 @@ public class Spider extends Thread {
 		runNextTask();
 	}
 
+	/**
+	 * 如果等待队列中存在任务，运行等待队列中的任务
+	 */
 	public void runNextTask() {
 		TaskManager.FIRST_FIFO.remove(config.getTask());
 		if (TaskManager.SECOND_FIFO.size() > 0) {

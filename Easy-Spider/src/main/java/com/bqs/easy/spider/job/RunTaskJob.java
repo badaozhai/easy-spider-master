@@ -9,7 +9,7 @@ import com.bqs.easy.spider.core.SpiderConfig;
 import com.bqs.easy.spider.entity.Task;
 import com.bqs.easy.spider.manager.TaskManager;
 
-public class SimpleJob implements Job {
+public class RunTaskJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
