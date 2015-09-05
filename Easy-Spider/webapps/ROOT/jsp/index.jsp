@@ -34,11 +34,15 @@ width:68px;
 </head>
 <body>
 	<form action="/spider.do?method=add" method="post">
+	<div style="width:400px;height:300px;border:1px solid red;text-align:center;padding-top:20px;">
 		 mainURL <input	name="mainURL" class="val"/><br> 
 		 websiteName <input name="websiteName" class="val"/><br>
+		 depth <input name="depth" value="1" class="val" /><br> 
+		 threadNum <input name="threadNum" value="1" class="val" /><br> 
 		 isDeleted <input	name="isDeleted" class="val"/><br> 
-		 quartzParam <input name="quartzParam"	value="0/10  0/1  *  *  *  ?" class="val" /><br> 
+		 quartzParam <input name="quartzParam" value="0/10 0/1 * * * ?" class="val" /><br> 
 		 <input type="submit" value="登陆">
+	</div>
 	</form>
 </body>
 </html>

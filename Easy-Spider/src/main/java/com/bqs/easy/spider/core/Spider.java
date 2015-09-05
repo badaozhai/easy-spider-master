@@ -4,6 +4,7 @@
 package com.bqs.easy.spider.core;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import org.apache.log4j.Logger;
 
@@ -23,13 +24,15 @@ public class Spider extends Thread {
 
 	private SpiderConfig config = null;
 
-	public Spider(SpiderConfig config) {
+	private CountDownLatch latch = null;
+
+	public Spider(SpiderConfig config, CountDownLatch latch) {
 		this.config = config;
+		this.latch = latch;
 	}
 
 	@Override
 	public void run() {
-		config.firstPage();
 		Request r = config.getQueues().poll();
 		while (r != null) {
 			log.info("queue size : " + config.getQueues().size() + " , depth : " + r.getDepth() + " ,url [ "
@@ -49,9 +52,14 @@ public class Spider extends Thread {
 			log.info("=========================================");
 		}
 
-		log.info("task [ " + config.getTask() + " ] end .");
+		latch.countDown();
 
-		runNextTask();
+		if (latch.getCount() == 0L) {
+			config.getDownloader().close();
+			log.info("task [ " + config.getTask() + " ] end .");
+			runNextTask();
+		}
+
 	}
 
 	/**
@@ -62,7 +70,16 @@ public class Spider extends Thread {
 		if (TaskManager.SECOND_FIFO.size() > 0) {
 			Task nt = TaskManager.SECOND_FIFO.remove(0);
 			SpiderConfig spiderConfig = new SpiderConfig(nt);
-			new Spider(spiderConfig).start();
+			CountDownLatch latch = new CountDownLatch(nt.getThreadNum());
+			for (int i = 0; i < nt.getThreadNum(); i++) {
+				new Spider(spiderConfig, latch).start();
+			}
+			try {
+				latch.await();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			log.info("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.bqs.easy.spider.job;
 
+import java.util.concurrent.CountDownLatch;
+
 import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -20,7 +22,16 @@ public class RunTaskJob implements Job {
 		if (!TaskManager.FIRST_FIFO.contains(t)) {
 			if (TaskManager.FIRST_FIFO.size() < 10) {
 				SpiderConfig spiderConfig = new SpiderConfig(t);
-				new Spider(spiderConfig).start();
+				CountDownLatch latch = new CountDownLatch(t.getThreadNum());
+				for (int i = 0; i < t.getThreadNum(); i++) {
+					new Spider(spiderConfig,latch).start();
+				}
+				try {
+					latch.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				log.info("0000000000000000000000000000000000000000000000000000000000000000");
 			} else {
 				if (TaskManager.SECOND_FIFO.contains(t)) {
 					log.info("任务已经在第二队列中" + t.getMainURL());

@@ -16,7 +16,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class CommonInterceptor extends HandlerInterceptorAdapter {
 	private final Logger log = LoggerFactory.getLogger(CommonInterceptor.class);
-	public static final String LAST_PAGE = "com.alibaba.lastPage";
 
 	/**
 	 * 在业务处理器处理请求之前被调用 如果返回false 从当前的拦截器往回执行所有拦截器的afterCompletion(),再退出拦截器链
@@ -33,6 +32,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 
 		String username = (String) request.getSession().getAttribute("islogin");
 		if (username == null&&!url.contains("login")) {
+			log.info("未登录");
 			response.sendRedirect("/login.html");
 			return false;
 		} else{

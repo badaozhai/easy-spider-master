@@ -263,10 +263,6 @@ public class EasyHttpClient {
 			log.info("end get url :" + url + " .");
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			log.info("begin get url :" + url + " . again .");
-			HttpUriRequest request = getHttpUriRequest(url, "get", null, header);
-			text = execute_text(charset, header, request);
-			log.info("end get url :" + url + " . again .");
 		}
 		return text;
 	}
@@ -422,9 +418,11 @@ public class EasyHttpClient {
 				text = getContent(charset, httpResponse);
 			}
 		} catch (ClientProtocolException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage());
 		} finally {
 			if (httpUriRequest != null) {
 				httpUriRequest.abort();

@@ -14,10 +14,15 @@ public class HttpClientDownloader extends EasyHttpClient implements IDownloader 
 
 	public Page requestText(Request request) {
 
+		String text = "";
 		log.info(request.getMethod() + " : [ " + request.getUrl() + " ] text start . ");
-		HttpUriRequest requesturi = requestHelp(request);
-		String text = execute_text("", request.getHeader(), requesturi);
-		log.info(request.getMethod() + " : [ " + request.getUrl() + " ]  text end . ");
+		try {
+			HttpUriRequest requesturi = requestHelp(request);
+			text = execute_text("", request.getHeader(), requesturi);
+			log.info(request.getMethod() + " : [ " + request.getUrl() + " ]  text end . ");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 
 		Page p = new Page();
 		p.setHtml(text);

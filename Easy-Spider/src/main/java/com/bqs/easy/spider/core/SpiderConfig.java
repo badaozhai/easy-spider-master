@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
@@ -51,7 +52,7 @@ public class SpiderConfig {
 	/**
 	 * 待处理队列
 	 */
-	private Set<String> visitingURL = new LinkedHashSet<String>();
+//	private Set<String> visitingURL = new LinkedHashSet<String>();
 	/**
 	 * 任务队列
 	 */
@@ -63,7 +64,7 @@ public class SpiderConfig {
 		this.t = t;
 		downloader = new HttpClientDownloader();
 		extractionhrefs = new ExtractionHref();
-
+		firstPage();
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class SpiderConfig {
 	 * @param requests
 	 * @param depth
 	 */
-	public void addRequests(List<Request> requests, int depth) {
+	public synchronized void addRequests(List<Request> requests, int depth) {
 		int cdepth = depth + 1;
 		for (Request request : requests) {
 			String url = request.getUrl();

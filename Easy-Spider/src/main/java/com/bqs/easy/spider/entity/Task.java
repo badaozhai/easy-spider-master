@@ -42,6 +42,9 @@ public class Task implements Serializable {
 	/** 任务状态 */
 	private int status = 0;
 
+	/** 线程数 */
+	private int threadNum = 1;
+
 	/** 定时器参数,默认为 每隔一小时更新一次 */
 	private String quartzParam = "0/10  0/1  *  *  *  ?";
 
@@ -132,6 +135,17 @@ public class Task implements Serializable {
 			request = new Request(mainURL);
 		}
 		return request;
+	}
+
+	public int getThreadNum() {
+		if (threadNum < 1) {
+			return 1;
+		}
+		return threadNum;
+	}
+
+	public void setThreadNum(int threadNum) {
+		this.threadNum = threadNum;
 	}
 
 	@Override
