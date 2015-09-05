@@ -17,6 +17,7 @@ import com.bqs.easy.spider.downloader.HttpClientDownloader;
 import com.bqs.easy.spider.entity.Task;
 import com.bqs.easy.spider.imp.IDownloader;
 import com.bqs.easy.spider.imp.IExtractionHrefAble;
+import com.bqs.easy.spider.imp.ILogin;
 import com.bqs.easy.spider.imp.IPipeline;
 import com.bqs.easy.spider.manager.TaskManager;
 import com.bqs.easy.spider.parser.ExtractionHref;
@@ -51,6 +52,8 @@ public class SpiderConfig {
 	 */
 	private Set<String> visitedURL = new LinkedHashSet<String>();
 
+	private ILogin login = null;
+
 	private IPipeline pipeLine = null;
 	/**
 	 * 待处理队列
@@ -68,7 +71,25 @@ public class SpiderConfig {
 		downloader = new HttpClientDownloader();
 		extractionhrefs = new ExtractionHref();
 		pipeLine = new ConsolePipeline();
-		firstPage();
+		if (t.isIslogin()) {
+			String username = t.getUsername();
+			String password = t.getPassword();
+			if (null == username || "".equals(username)) {
+				log.error("用户名为空");
+			}
+			if (null == password || "".equals(password)) {
+				log.error("密码为空");
+			}
+			boolean loginstatus = login.Login(downloader, username, password);
+			if (loginstatus) {
+				firstPage();
+			} else {
+				return;
+			}
+		} else {
+			firstPage();
+		}
+
 	}
 
 	/**
@@ -137,6 +158,11 @@ public class SpiderConfig {
 		} else {
 			this.pipeLine = new ConsolePipeline();
 		}
+		return this;
+	}
+
+	public SpiderConfig setLogin(ILogin login) {
+		this.login = login;
 		return this;
 	}
 

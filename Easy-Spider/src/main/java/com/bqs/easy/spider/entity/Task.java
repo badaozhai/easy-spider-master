@@ -48,6 +48,13 @@ public class Task implements Serializable {
 	/** 定时器参数,默认为 每隔一小时更新一次 */
 	private String quartzParam = "0/10  0/1  *  *  *  ?";
 
+	/** 本次采集是否需要登陆 */
+	private boolean islogin = false;
+	/** 用户名 */
+	private String username = "";
+	/** 密码 */
+	private String password = "";
+
 	private Request request = null;
 
 	public String getWebsiteName() {
@@ -130,6 +137,22 @@ public class Task implements Serializable {
 		this.quartzParam = quartzParam;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Request getRequest() {
 		if (request == null) {
 			request = new Request(mainURL);
@@ -146,6 +169,14 @@ public class Task implements Serializable {
 
 	public void setThreadNum(int threadNum) {
 		this.threadNum = threadNum;
+	}
+
+	public boolean isIslogin() {
+		return islogin;
+	}
+
+	public void setIslogin(boolean islogin) {
+		this.islogin = islogin;
 	}
 
 	@Override
