@@ -7,7 +7,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.log4j.Logger;
@@ -18,8 +17,10 @@ import com.bqs.easy.spider.downloader.HttpClientDownloader;
 import com.bqs.easy.spider.entity.Task;
 import com.bqs.easy.spider.imp.IDownloader;
 import com.bqs.easy.spider.imp.IExtractionHrefAble;
+import com.bqs.easy.spider.imp.IPipeline;
 import com.bqs.easy.spider.manager.TaskManager;
 import com.bqs.easy.spider.parser.ExtractionHref;
+import com.bqs.easy.spider.pipeline.ConsolePipeline;
 
 /**
  * 采集配置
@@ -49,10 +50,12 @@ public class SpiderConfig {
 	 * 已处理队列
 	 */
 	private Set<String> visitedURL = new LinkedHashSet<String>();
+
+	private IPipeline pipeLine = null;
 	/**
 	 * 待处理队列
 	 */
-//	private Set<String> visitingURL = new LinkedHashSet<String>();
+	// private Set<String> visitingURL = new LinkedHashSet<String>();
 	/**
 	 * 任务队列
 	 */
@@ -64,6 +67,7 @@ public class SpiderConfig {
 		this.t = t;
 		downloader = new HttpClientDownloader();
 		extractionhrefs = new ExtractionHref();
+		pipeLine = new ConsolePipeline();
 		firstPage();
 	}
 
@@ -88,8 +92,8 @@ public class SpiderConfig {
 			String url = request.getUrl();
 			if (!visitedURL.contains(url) && !queues.contains(request)) {
 				request.setDepth(cdepth);
-				log.info("put , Method : [ " + request.getMethod() + " ] Depth : " + cdepth + " , Url - " + request.getUrl()
-						+ " | " + request.getTitle());
+				log.info("put , Method : [ " + request.getMethod() + " ] Depth : " + cdepth + " , Url - "
+						+ request.getUrl() + " | " + request.getTitle());
 				queues.add(request);
 			}
 		}
@@ -125,6 +129,19 @@ public class SpiderConfig {
 			this.downloader = new HttpClientDownloader();
 		}
 		return this;
+	}
+
+	public SpiderConfig setPipeLine(IPipeline pipeLine) {
+		if (pipeLine != null) {
+			this.pipeLine = pipeLine;
+		} else {
+			this.pipeLine = new ConsolePipeline();
+		}
+		return this;
+	}
+
+	public IPipeline getPipeLine() {
+		return pipeLine;
 	}
 
 	public IDownloader getDownloader() {

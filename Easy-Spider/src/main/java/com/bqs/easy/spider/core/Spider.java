@@ -38,7 +38,8 @@ public class Spider extends Thread {
 			log.info("queue size : " + config.getQueues().size() + " , depth : " + r.getDepth() + " ,url [ "
 					+ r.getUrl() + " ] start .");
 			Page p = config.getDownloader().requestText(r);
-			System.out.println(p.getHtml().length());
+			Object o = config.getPipeLine().process(p);
+			config.getPipeLine().add(o);
 			log.info("url [ " + r.getUrl() + " ] end .");
 			int maxdepth = config.getTask().getDepth();
 			int depth = r.getDepth();
@@ -55,6 +56,7 @@ public class Spider extends Thread {
 		latch.countDown();
 
 		if (latch.getCount() == 0L) {
+			config.getPipeLine().save();
 			config.getDownloader().close();
 			log.info("task [ " + config.getTask() + " ] end .");
 			runNextTask();
