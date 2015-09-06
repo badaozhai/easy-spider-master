@@ -1,6 +1,7 @@
 ﻿package com.bqs.easy.spider.entity;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.bqs.easy.httpclient.entity.Request;
 import com.google.gson.Gson;
@@ -56,6 +57,8 @@ public class Task implements Serializable {
 	private String password = "";
 
 	private Request request = null;
+
+	private AtomicInteger counter;
 
 	public String getWebsiteName() {
 		return websiteName;
@@ -177,6 +180,17 @@ public class Task implements Serializable {
 
 	public void setIslogin(boolean islogin) {
 		this.islogin = islogin;
+	}
+
+	public AtomicInteger getCounter() {
+		if (counter == null) {
+			counter = new AtomicInteger(0);
+		}
+		return counter;
+	}
+
+	public void setCounter(AtomicInteger counter) {
+		this.counter = counter;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.bqs.easy.httpclient.entity;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.google.gson.Gson;
 
@@ -26,9 +27,13 @@ public class Request implements Serializable {
 	private String referer = "";
 
 	private Map<String, String> header = new LinkedHashMap<String, String>();
-	private Map<String, String> postdata = new LinkedHashMap<String, String>();
-	private Map<String, String> extra = new LinkedHashMap<String, String>();
-	private Map<String, Object> extra1 = new LinkedHashMap<String, Object>();
+
+	/**
+	 * 这里使用treemap，主要是为了在排重的时候使用
+	 */
+	private Map<String, String> postdata = new TreeMap<String, String>();
+	private Map<String, String> extra = new TreeMap<String, String>();
+	private Map<String, Object> extra1 = new TreeMap<String, Object>();
 
 	public Request() {
 	}
