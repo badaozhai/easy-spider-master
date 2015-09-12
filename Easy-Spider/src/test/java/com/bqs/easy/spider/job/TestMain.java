@@ -19,5 +19,6 @@ public class TestMain {
 			System.out.println(b);
 		}
 		System.out.println(r.isContainStr(null));
+		r.save();
 	}
 }

@@ -192,7 +192,12 @@ public class TaskManager {
 		ObjectOutputStream oos = null;
 		FileOutputStream fos = null;
 		boolean isSaved = true;
+		
 		try {
+			File parent=taskFile.getParentFile();
+			if(!parent.exists()){
+				parent.mkdirs();
+			}
 			fos = new FileOutputStream(taskFile);
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(t); // 将对象流写入文件.

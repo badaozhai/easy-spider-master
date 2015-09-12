@@ -49,6 +49,7 @@ public class Spider extends Thread {
 				config.addRequests(list, depth);
 			}
 			config.getVisitedURL().add(r.getUrl());
+			config.getRemover().put(r);
 			r = config.getQueues().poll();
 			log.info("=========================================");
 		}
@@ -58,6 +59,8 @@ public class Spider extends Thread {
 		if (latch.getCount() == 0L) {
 			config.getPipeLine().save();
 			config.getDownloader().close();
+			config.getRemover().save();
+			config.getRemover().close();
 			log.info("task [ " + config.getTask() + " ] end .");
 			runNextTask();
 		}

@@ -15,7 +15,9 @@ import com.bqs.easy.httpclient.entity.Page;
 import com.bqs.easy.httpclient.entity.Request;
 import com.bqs.easy.spider.downloader.HttpClientDownloader;
 import com.bqs.easy.spider.entity.Task;
+import com.bqs.easy.spider.imp.BloomFilterDuplicateRemover;
 import com.bqs.easy.spider.imp.IDownloader;
+import com.bqs.easy.spider.imp.IDuplicateRemover;
 import com.bqs.easy.spider.imp.IExtractionHrefAble;
 import com.bqs.easy.spider.imp.ILogin;
 import com.bqs.easy.spider.imp.IPipeline;
@@ -52,6 +54,8 @@ public class SpiderConfig {
 	 */
 	private Set<String> visitedURL = new LinkedHashSet<String>();
 
+	private IDuplicateRemover remover = null;
+
 	private ILogin login = null;
 
 	private IPipeline pipeLine = null;
@@ -71,6 +75,7 @@ public class SpiderConfig {
 		downloader = new HttpClientDownloader();
 		extractionhrefs = new ExtractionHref();
 		pipeLine = new ConsolePipeline();
+		remover = new BloomFilterDuplicateRemover(t);
 		if (t.isIslogin()) {
 			String username = t.getUsername();
 			String password = t.getPassword();
@@ -111,7 +116,7 @@ public class SpiderConfig {
 		int cdepth = depth + 1;
 		for (Request request : requests) {
 			String url = request.getUrl();
-			if (!visitedURL.contains(url) && !queues.contains(request)) {
+			if (!remover.isContainStr(url) && !queues.contains(request)) {
 				request.setDepth(cdepth);
 				log.info("put , Method : [ " + request.getMethod() + " ] Depth : " + cdepth + " , Url - "
 						+ request.getUrl() + " | " + request.getTitle());
@@ -166,6 +171,11 @@ public class SpiderConfig {
 		return this;
 	}
 
+	public SpiderConfig setRemover(IDuplicateRemover remover) {
+		this.remover = remover;
+		return this;
+	}
+
 	public IPipeline getPipeLine() {
 		return pipeLine;
 	}
@@ -180,5 +190,9 @@ public class SpiderConfig {
 
 	public Set<String> getVisitedURL() {
 		return visitedURL;
+	}
+	
+	public IDuplicateRemover getRemover() {
+		return remover;
 	}
 }
