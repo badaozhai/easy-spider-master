@@ -1,7 +1,7 @@
 package com.bqs.easy.spider.job;
 
 import com.bqs.easy.spider.entity.Task;
-import com.bqs.easy.spider.imp.BloomFilterDuplicateRemover;
+import com.bqs.easy.spider.impl.remover.BloomFilterDuplicateRemover;
 
 public class TestMain {
 

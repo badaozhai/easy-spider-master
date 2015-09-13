@@ -1,4 +1,4 @@
-package com.bqs.easy.spider.pipeline;
+package com.bqs.easy.spider.impl.pipeline;
 
 import java.io.File;
 import java.io.IOException;

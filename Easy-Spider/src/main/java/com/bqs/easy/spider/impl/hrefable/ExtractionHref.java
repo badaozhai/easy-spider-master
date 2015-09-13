@@ -1,4 +1,4 @@
-package com.bqs.easy.spider.parser;
+package com.bqs.easy.spider.impl.hrefable;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,8 +12,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.bqs.easy.httpclient.entity.Request;
-import com.bqs.easy.spider.downloader.HttpClientDownloader;
 import com.bqs.easy.spider.imp.IExtractionHrefAble;
+import com.bqs.easy.spider.impl.downloader.HttpClientDownloader;
 import com.bqs.easy.util.MyStringUtil;
 
 

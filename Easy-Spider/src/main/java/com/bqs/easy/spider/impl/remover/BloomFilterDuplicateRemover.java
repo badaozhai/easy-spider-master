@@ -1,7 +1,8 @@
-package com.bqs.easy.spider.imp;
+package com.bqs.easy.spider.impl.remover;
 
 import com.bqs.easy.httpclient.entity.Request;
 import com.bqs.easy.spider.entity.Task;
+import com.bqs.easy.spider.imp.IDuplicateRemover;
 import com.bqs.easy.spider.manager.TaskManager;
 import com.bqs.easy.util.MD5Util;
 import com.google.common.hash.BloomFilter;

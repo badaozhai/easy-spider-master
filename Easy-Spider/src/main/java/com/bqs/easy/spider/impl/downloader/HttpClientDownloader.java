@@ -1,4 +1,4 @@
-package com.bqs.easy.spider.downloader;
+package com.bqs.easy.spider.impl.downloader;
 
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.log4j.Logger;

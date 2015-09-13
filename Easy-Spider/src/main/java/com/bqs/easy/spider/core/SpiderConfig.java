@@ -13,17 +13,17 @@ import org.apache.log4j.Logger;
 
 import com.bqs.easy.httpclient.entity.Page;
 import com.bqs.easy.httpclient.entity.Request;
-import com.bqs.easy.spider.downloader.HttpClientDownloader;
 import com.bqs.easy.spider.entity.Task;
-import com.bqs.easy.spider.imp.BloomFilterDuplicateRemover;
 import com.bqs.easy.spider.imp.IDownloader;
 import com.bqs.easy.spider.imp.IDuplicateRemover;
 import com.bqs.easy.spider.imp.IExtractionHrefAble;
 import com.bqs.easy.spider.imp.ILogin;
 import com.bqs.easy.spider.imp.IPipeline;
+import com.bqs.easy.spider.impl.downloader.HttpClientDownloader;
+import com.bqs.easy.spider.impl.hrefable.ExtractionHref;
+import com.bqs.easy.spider.impl.pipeline.ConsolePipeline;
+import com.bqs.easy.spider.impl.remover.BloomFilterDuplicateRemover;
 import com.bqs.easy.spider.manager.TaskManager;
-import com.bqs.easy.spider.parser.ExtractionHref;
-import com.bqs.easy.spider.pipeline.ConsolePipeline;
 
 /**
  * 采集配置
