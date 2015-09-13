@@ -72,11 +72,31 @@ public class SpiderConfig {
 		log.info("task [ " + t + " ] end .");
 		TaskManager.FIRST_FIFO.add(t);
 		this.t = t;
-		downloader = new HttpClientDownloader();
-		extractionhrefs = new ExtractionHref();
-		pipeLine = new ConsolePipeline();
-		remover = new BloomFilterDuplicateRemover(t);
+
+		// 从Jar文件得到一个Class加载器
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
+		downloader = MyClassLoader.load("", cl, IDownloader.class);
+		if (downloader == null) {
+			downloader = new HttpClientDownloader();
+		}
+		extractionhrefs = MyClassLoader.load("", cl, IExtractionHrefAble.class);
+		if (extractionhrefs == null) {
+			extractionhrefs = new ExtractionHref();
+		}
+		pipeLine = MyClassLoader.load("", cl, IPipeline.class);
+		if (pipeLine == null) {
+			pipeLine = new ConsolePipeline();
+		}
+		remover = MyClassLoader.load("", cl, IDuplicateRemover.class);
+		if (remover == null) {
+			remover = new BloomFilterDuplicateRemover(t);
+		}
 		if (t.isIslogin()) {
+			login = MyClassLoader.load("", cl, ILogin.class);
+			if (login == null) {
+				return;
+			}
 			String username = t.getUsername();
 			String password = t.getPassword();
 			if (null == username || "".equals(username)) {
@@ -191,7 +211,7 @@ public class SpiderConfig {
 	public Set<String> getVisitedURL() {
 		return visitedURL;
 	}
-	
+
 	public IDuplicateRemover getRemover() {
 		return remover;
 	}
