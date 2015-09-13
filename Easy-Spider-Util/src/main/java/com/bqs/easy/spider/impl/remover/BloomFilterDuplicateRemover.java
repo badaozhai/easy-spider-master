@@ -3,7 +3,7 @@ package com.bqs.easy.spider.impl.remover;
 import com.bqs.easy.httpclient.entity.Request;
 import com.bqs.easy.spider.entity.Task;
 import com.bqs.easy.spider.imp.IDuplicateRemover;
-import com.bqs.easy.spider.manager.TaskManager;
+import com.bqs.easy.spider.util.FileUtil;
 import com.bqs.easy.util.MD5Util;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
@@ -49,7 +49,7 @@ public class BloomFilterDuplicateRemover extends IDuplicateRemover {
 
 	@SuppressWarnings("unchecked")
 	public void load(int expectedInsertions) {
-		bloomFilter = TaskManager.objectRead(getTaskFile(t), BloomFilter.class);
+		bloomFilter = FileUtil.objectRead(getTaskFile(t), BloomFilter.class);
 		if (bloomFilter == null) {
 			load(expectedInsertions, 0.01);
 		}
@@ -163,7 +163,7 @@ public class BloomFilterDuplicateRemover extends IDuplicateRemover {
 	}
 
 	public void save() {
-		TaskManager.objectWirte(getTaskFile(t), bloomFilter, BloomFilter.class);
+		FileUtil.objectWirte(getTaskFile(t), bloomFilter, BloomFilter.class);
 	}
 
 }
