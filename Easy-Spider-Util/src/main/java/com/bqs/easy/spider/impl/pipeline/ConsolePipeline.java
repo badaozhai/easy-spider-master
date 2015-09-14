@@ -27,7 +27,7 @@ public class ConsolePipeline implements IPipeline {
 	public void save() {
 		log.info("save");
 		try {
-			FileUtils.writeLines(new File("data"+File.separator+System.currentTimeMillis()+".txt"), list);
+			FileUtils.writeLines(new File("data" + File.separator + System.currentTimeMillis() + ".txt"), list);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

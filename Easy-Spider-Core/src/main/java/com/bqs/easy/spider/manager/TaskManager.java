@@ -140,7 +140,6 @@ public class TaskManager {
 		logger.info("加载任务完成，共加载任务 : [ " + taskset.size() + " ] 个");
 	}
 
-
 	public static TaskManager getInstance() {
 		if (instance == null) {
 			instance = new TaskManager();

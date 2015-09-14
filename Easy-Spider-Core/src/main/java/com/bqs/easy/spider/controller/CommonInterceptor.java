@@ -31,11 +31,11 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		String url = requestUri.substring(contextPath.length());
 
 		String username = (String) request.getSession().getAttribute("islogin");
-		if (username == null&&!url.contains("login")) {
+		if (username == null && !url.contains("login")) {
 			log.info("未登录");
 			response.sendRedirect("/login.html");
 			return false;
-		} else{
+		} else {
 			return true;
 		}
 	}

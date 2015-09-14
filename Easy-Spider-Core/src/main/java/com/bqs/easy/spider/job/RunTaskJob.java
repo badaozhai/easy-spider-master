@@ -24,7 +24,7 @@ public class RunTaskJob implements Job {
 				SpiderConfig spiderConfig = new SpiderConfig(t);
 				CountDownLatch latch = new CountDownLatch(t.getThreadNum());
 				for (int i = 0; i < t.getThreadNum(); i++) {
-					new Spider(spiderConfig,latch).start();
+					new Spider(spiderConfig, latch).start();
 				}
 				try {
 					latch.await();

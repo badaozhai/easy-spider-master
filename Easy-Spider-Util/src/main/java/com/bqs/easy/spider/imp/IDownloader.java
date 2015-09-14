@@ -16,7 +16,7 @@ public interface IDownloader {
 	public Page requestText(Request request);
 
 	public Page requestBytes(Request request);
-	
+
 	public void close();
 
 }

@@ -24,7 +24,8 @@ public class User {
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param username
+	 *            the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -38,7 +39,8 @@ public class User {
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -52,12 +54,13 @@ public class User {
 	}
 
 	/**
-	 * @param token the token to set
+	 * @param token
+	 *            the token to set
 	 */
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);

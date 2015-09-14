@@ -22,8 +22,8 @@ import com.bqs.easy.spider.imp.IPipeline;
 import com.bqs.easy.spider.impl.downloader.HttpClientDownloader;
 import com.bqs.easy.spider.impl.hrefable.ExtractionHref;
 import com.bqs.easy.spider.impl.pipeline.ConsolePipeline;
-import com.bqs.easy.spider.impl.remover.BloomFilterDuplicateRemover;
 import com.bqs.easy.spider.manager.TaskManager;
+import com.bqs.easy.spider.util.Variable;
 
 /**
  * 采集配置
@@ -56,7 +56,7 @@ public class SpiderConfig {
 
 	private IDuplicateRemover remover = null;
 
-	private ILogin login = null;
+	private ILogin login_plug = null;
 
 	private IPipeline pipeLine = null;
 	/**
@@ -68,6 +68,7 @@ public class SpiderConfig {
 	 */
 	BlockingQueue<Request> queues = new LinkedBlockingQueue<Request>();
 
+	@SuppressWarnings("unchecked")
 	public SpiderConfig(Task t) {
 		log.info("task [ " + t + " ] end .");
 		TaskManager.FIRST_FIFO.add(t);
@@ -76,25 +77,36 @@ public class SpiderConfig {
 		// 从Jar文件得到一个Class加载器
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
-		downloader = MyClassLoader.load("", cl, IDownloader.class);
+		downloader = MyClassLoader.load(t.getPlug_Downloader(), cl, IDownloader.class);
 		if (downloader == null) {
-			downloader = new HttpClientDownloader();
+			log.warn("downloader is null , load " + Variable.downloader);
+			downloader = MyClassLoader.load(Variable.downloader, cl, IDownloader.class);
 		}
-		extractionhrefs = MyClassLoader.load("", cl, IExtractionHrefAble.class);
+		extractionhrefs = MyClassLoader.load(t.getPlug_Extractionhrefs(), cl, IExtractionHrefAble.class);
 		if (extractionhrefs == null) {
-			extractionhrefs = new ExtractionHref();
+			log.warn("extractionhrefs is null , load " + Variable.extractionhrefs);
+			extractionhrefs = MyClassLoader.load(Variable.extractionhrefs, cl, IExtractionHrefAble.class);
 		}
-		pipeLine = MyClassLoader.load("", cl, IPipeline.class);
+		pipeLine = MyClassLoader.load(t.getPlug_PipeLine(), cl, IPipeline.class);
 		if (pipeLine == null) {
-			pipeLine = new ConsolePipeline();
+			log.warn("pipeLine is null , load " + Variable.pipeLine);
+			pipeLine = MyClassLoader.load(Variable.pipeLine, cl, IPipeline.class);
 		}
-		remover = MyClassLoader.load("", cl, IDuplicateRemover.class);
+		remover = MyClassLoader.load(t.getPlug_Remover(), cl, IDuplicateRemover.class, new Class[] { Task.class },
+				new Object[] { t });
 		if (remover == null) {
-			remover = new BloomFilterDuplicateRemover(t);
+			log.warn("remover is null , load " + Variable.remover);
+			remover = MyClassLoader.load(Variable.remover, cl, IDuplicateRemover.class, new Class[] { Task.class },
+					new Object[] { t });
+		}
+
+		if (remover == null || pipeLine == null || extractionhrefs == null || downloader == null) {
+			log.error("某个组件为空，任务停止运行");
+			return;
 		}
 		if (t.isIslogin()) {
-			login = MyClassLoader.load("", cl, ILogin.class);
-			if (login == null) {
+			login_plug = MyClassLoader.load(t.getPlug_Login(), cl, ILogin.class);
+			if (login_plug == null) {
 				return;
 			}
 			String username = t.getUsername();
@@ -105,7 +117,7 @@ public class SpiderConfig {
 			if (null == password || "".equals(password)) {
 				log.error("密码为空");
 			}
-			boolean loginstatus = login.Login(downloader, username, password);
+			boolean loginstatus = login_plug.Login(downloader, username, password);
 			if (loginstatus) {
 				firstPage();
 			} else {
@@ -187,7 +199,7 @@ public class SpiderConfig {
 	}
 
 	public SpiderConfig setLogin(ILogin login) {
-		this.login = login;
+		this.login_plug = login;
 		return this;
 	}
 

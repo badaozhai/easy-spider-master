@@ -84,7 +84,7 @@ public class BloomFilterDuplicateRemover extends IDuplicateRemover {
 		boolean isDuplicate = bloomFilter.mightContain(getMd5(url));
 		if (!isDuplicate) {
 			t.getCounter().incrementAndGet();
-			if(t.getCounter().get()%50==0){
+			if (t.getCounter().get() % 50 == 0) {
 				this.save();
 			}
 			bloomFilter.put(getMd5(url));

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.bqs.easy.httpclient.entity.Request;
+import com.bqs.easy.spider.util.Variable;
 import com.google.gson.Gson;
 
 /**
@@ -57,6 +58,12 @@ public class Task implements Serializable {
 	private String password = "";
 
 	private Request request = null;
+
+	private String plug_Downloader = "com.bqs.easy.spider.impl.downloader.HttpClientDownloader";
+	private String plug_Extractionhrefs = "com.bqs.easy.spider.impl.hrefable.ExtractionHref";
+	private String plug_PipeLine = "com.bqs.easy.spider.impl.pipeline.ConsolePipeline";
+	private String plug_Remover = "com.bqs.easy.spider.impl.remover.BloomFilterDuplicateRemover";
+	private String plug_Login = "";
 
 	private AtomicInteger counter;
 
@@ -191,6 +198,61 @@ public class Task implements Serializable {
 
 	public void setCounter(AtomicInteger counter) {
 		this.counter = counter;
+	}
+
+	public String getPlug_Downloader() {
+		if (plug_Downloader == null) {
+			plug_Downloader = Variable.downloader;
+		}
+		return plug_Downloader;
+	}
+
+	public void setPlug_Downloader(String plug_Downloader) {
+		this.plug_Downloader = plug_Downloader;
+	}
+
+	public String getPlug_Extractionhrefs() {
+		if (plug_Extractionhrefs == null) {
+			plug_Extractionhrefs = Variable.extractionhrefs;
+		}
+		return plug_Extractionhrefs;
+	}
+
+	public void setPlug_Extractionhrefs(String plug_Extractionhrefs) {
+		this.plug_Extractionhrefs = plug_Extractionhrefs;
+	}
+
+	public String getPlug_PipeLine() {
+		if (plug_PipeLine == null) {
+			plug_PipeLine = Variable.pipeLine;
+		}
+		return plug_PipeLine;
+	}
+
+	public void setPlug_PipeLine(String plug_PipeLine) {
+		this.plug_PipeLine = plug_PipeLine;
+	}
+
+	public String getPlug_Remover() {
+		if (plug_Remover == null) {
+			plug_Remover = Variable.remover;
+		}
+		return plug_Remover;
+	}
+
+	public void setPlug_Remover(String plug_Remover) {
+		this.plug_Remover = plug_Remover;
+	}
+
+	public String getPlug_Login() {
+		if (plug_Login == null) {
+			plug_Login = "";
+		}
+		return plug_Login;
+	}
+
+	public void setPlug_Login(String plug_Login) {
+		this.plug_Login = plug_Login;
 	}
 
 	@Override

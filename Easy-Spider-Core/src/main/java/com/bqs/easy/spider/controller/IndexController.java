@@ -23,11 +23,12 @@ public class IndexController {
 	}
 
 	@RequestMapping({ "/login.html" })
-	public String loginpage(@ModelAttribute User u,  HttpServletRequest request) {
+	public String loginpage(@ModelAttribute User u, HttpServletRequest request) {
 		return "login";
 	}
+
 	@RequestMapping({ "/login" })
-	public String login(@ModelAttribute User u,  HttpServletRequest request) {
+	public String login(@ModelAttribute User u, HttpServletRequest request) {
 		if (u != null && !"".equals(u.getUsername())) {
 			System.out.println(u);
 			request.getSession().setAttribute("islogin", "true");

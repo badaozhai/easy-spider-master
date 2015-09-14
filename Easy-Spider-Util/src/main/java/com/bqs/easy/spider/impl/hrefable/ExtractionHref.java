@@ -16,9 +16,9 @@ import com.bqs.easy.spider.imp.IExtractionHrefAble;
 import com.bqs.easy.spider.impl.downloader.HttpClientDownloader;
 import com.bqs.easy.util.MyStringUtil;
 
-
 /**
  * 通用连接提取方法，可以自定义
+ * 
  * @author xym
  * @date 2015年9月3日
  */
@@ -27,10 +27,14 @@ public class ExtractionHref implements IExtractionHrefAble {
 
 	/**
 	 * 连接提取
-	 * @param referer 来源url
-	 * @param html 网页内容
+	 * 
+	 * @param referer
+	 *            来源url
+	 * @param html
+	 *            网页内容
 	 * @param taskmap
-	 * @param charset 网页字符集
+	 * @param charset
+	 *            网页字符集
 	 * @return
 	 */
 	public List<Request> parserLinksInHTML(String referer, String html, Map<String, Map<String, String>> taskmap,
