@@ -13,6 +13,8 @@ public class MyClassLoader {
 	public static <T> T load(String classname, ClassLoader classloader, Class<T> classType, Class<T>[] paramTypes,
 			Object[] params) {
 
+		log.info("classname : [ " + classname + " ] . classloader : [ " + classloader + " ] . classType : [ "
+				+ classType + " ] .");
 		if (null == classname || null == classloader || null == classType) {
 			log.error("classname : [ " + classname + " ] . classloader : [ " + classloader + " ] . classType : [ "
 					+ classType + " ] .");

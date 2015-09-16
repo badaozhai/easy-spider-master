@@ -17,8 +17,7 @@ public class FileUtil {
 	/**
 	 * task 读取
 	 * 
-	 * @param taskFile
-	 *            任务
+	 * @param taskFile 任务
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T objectRead(File taskFile, Class<T> c) {
@@ -35,7 +34,8 @@ public class FileUtil {
 				// 读出任务流.
 				object = (T) ois.readObject();
 			} catch (Exception ex) {
-				logger.error(ex.getMessage());
+				// 这里出现过异常，出现原因可能是bloomfilter写入过程中关闭程序
+				logger.error(ex.getMessage(), ex);
 			}
 		} catch (IOException e) {
 			logger.error(e.getMessage());
@@ -55,8 +55,7 @@ public class FileUtil {
 	/**
 	 * task 读取
 	 * 
-	 * @param taskFile
-	 *            任务
+	 * @param taskFile 任务
 	 */
 	public static <T> boolean objectWirte(File taskFile, T t, Class<T> c) {
 		ObjectOutputStream oos = null;
