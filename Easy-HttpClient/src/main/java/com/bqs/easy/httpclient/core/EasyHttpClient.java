@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLHandshakeException;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -37,6 +38,7 @@ import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -148,6 +150,8 @@ public class EasyHttpClient {
 		connectionManager = new PoolingHttpClientConnectionManager(reg);
 		connectionManager.setDefaultMaxPerRoute(100);// 同一个路由允许最大连接数
 		// connectionManager.setMaxTotal(poolSize);
+		HttpHost localhost = new HttpHost("locahost", 80);  //如果是多网卡，这里选择出口IP？
+		connectionManager.setMaxPerRoute(new HttpRoute(localhost), 50);  
 
 		Registry<CookieSpecProvider> r = RegistryBuilder.<CookieSpecProvider> create()
 				.register(CookieSpecs.BEST_MATCH, new BestMatchSpecFactory())
