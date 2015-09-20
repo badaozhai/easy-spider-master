@@ -79,8 +79,8 @@ public class SpiderConfig {
 
 		downloader = MyClassLoader.load(t.getPlug_Downloader(), cl, IDownloader.class);
 		if (downloader == null) {
-			log.warn("downloader is null , load " + Variable.downloader);
-			downloader = MyClassLoader.load(Variable.downloader, cl, IDownloader.class);
+			log.warn("downloader is null , load " + Variable.httpclientdownloader);
+			downloader = MyClassLoader.load(Variable.httpclientdownloader, cl, IDownloader.class);
 		}
 		extractionhrefs = MyClassLoader.load(t.getPlug_Extractionhrefs(), cl, IExtractionHrefAble.class);
 		if (extractionhrefs == null) {

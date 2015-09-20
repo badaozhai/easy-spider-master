@@ -202,7 +202,7 @@ public class Task implements Serializable {
 
 	public String getPlug_Downloader() {
 		if (plug_Downloader == null) {
-			plug_Downloader = Variable.downloader;
+			plug_Downloader = Variable.httpclientdownloader;
 		}
 		return plug_Downloader;
 	}
