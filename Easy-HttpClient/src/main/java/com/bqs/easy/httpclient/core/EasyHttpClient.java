@@ -327,7 +327,7 @@ public class EasyHttpClient {
 			return RequestBuilder.get();
 		} else if (method.equalsIgnoreCase("post")) {
 			RequestBuilder requestBuilder = RequestBuilder.post();
-			if (postdata != null && postdata.size() > 0) {
+			if (postdata != null ) {
 
 				String contenttype = "application/x-www-form-urlencoded; charset=UTF-8";
 				if (headers != null && headers.size() > 0) {
@@ -358,8 +358,11 @@ public class EasyHttpClient {
 					log.info("post Content-Type : [ " + contenttype + " ] , pay attention to it .");
 					String charset = postdata.get("charset");// 提交数据的传输编码
 					String pstdata = postdata.get("postdata");// 提交的数据
-					if ("".equals(pstdata)) {
+					if ("".equals(pstdata)||pstdata==null) {
 						pstdata = postdata.get("");// 提交的数据
+					}
+					if(pstdata==null){
+						pstdata="";
 					}
 					if (charset == null) {
 						charset = "utf-8";

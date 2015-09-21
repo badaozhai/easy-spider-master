@@ -417,6 +417,14 @@ public class Datetil {
 				longDate = Long.valueOf(string2longEnglish(partDate + " 00:01", dateFormate));
 				return longDate.longValue();
 			}
+			// Fri Oct 09 23:59:59 CST 2015
+			regex = "[a-zA-Z]{3,10}[\\s][a-zA-Z]{3,10}[\\s]\\d{1,2}[\\s][\\d]{1,2}:[\\d]{1,2}:[\\d]{1,2} CST \\d{4}";
+			partDate = getStringByRegex(timeStr, regex, 0, 2);
+			if ((partDate != null) && (partDate.length() > 0)) {
+				dateFormate = "EEE MMM dd HH:mm:ss zzz yyyy";
+				longDate = Long.valueOf(string2longEnglish(partDate + " 00:01", dateFormate));
+				return longDate.longValue();
+			}
 			// Apr 14, 2015 8:46:50 AM
 			regex = "[a-zA-Z]{3,10}[\\s]\\d{1,2},[\\s]\\d{4}[\\s][\\d]{1,2}:[\\d]{1,2}:[\\d]{1,2} [A|P]M";
 			partDate = getStringByRegex(timeStr, regex, 0, 2);
@@ -622,6 +630,8 @@ public class Datetil {
 		l = Datetil.convergeTime("2014-01-01");
 		System.out.println(l + "------------------->" + System.currentTimeMillis());
 		l = Datetil.convergeTime("2015.08.04 12:13:57");
+		System.out.println(l + "------------------->" + System.currentTimeMillis());
+		l = Datetil.convergeTime(" Fri Oct 09 23:59:59 CST 2015");
 		System.out.println(l + "------------------->" + System.currentTimeMillis());
 	}
 }
